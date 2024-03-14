@@ -111,11 +111,28 @@ M.general = {
   },
 }
 
-local map = vim.keymap.set
+M.git = {
+  n = {
+    ["<leader>gg"] = { function() require("neogit").open() end, "Open Neogit" },
+    ["<leader>gs"] = { function() require("gitsigns").stage_hunk() end, "Git Stage hunk", },
+    ["<leader>gp"] = { function() require("gitsigns").preview_hunk_inline() end, "Git Preview hunk" },
+  },
+}
 
-for mode, mappings in pairs(M.general) do
-  for lhs, mapping in pairs(mappings) do
-    vim.keymap.set(mode, lhs, mapping[1], { desc = mapping[2] })
+M.agitator = {
+  n = {
+    ["<leader>gB"] = { function() require("agitator").git_blame_toggle {} end, "Git Blame", },
+    ["<leader>gf"] = { function() require("agitator").open_file_git_branch() end, "Git Find File", },
+    ["<leader>gt"] = { function() require("agitator").git_time_machine() end, "Git Timemachine",
+    },
+  },
+}
+
+for _name, config in pairs(M) do
+  for mode, mappings in pairs(config) do
+    for lhs, mapping in pairs(mappings) do
+      vim.keymap.set(mode, lhs, mapping[1], { desc = mapping[2] })
+    end
   end
 end
 
