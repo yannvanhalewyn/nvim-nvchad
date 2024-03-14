@@ -128,10 +128,90 @@ M.agitator = {
   },
 }
 
+M.harpoon = {
+  n = {
+    ["<leader>ha"] = { function() require("harpoon"):list():append() end, "Harpoon Add File" },
+    ["<leader>H"] = {
+      function()
+        require("harpoon").ui:toggle_quick_menu(
+          require("harpoon"):list(),
+          { border = "rounded", title_pos = "center" })
+      end,
+      "Harpoon Quick Menu"
+    },
+    ["<leader>1"] = { f.harpoon_select(1), "Harpoon Browse File (1)" },
+    ["<leader>2"] = { f.harpoon_select(2), "Harpoon Browse File (2)" },
+    ["<leader>3"] = { f.harpoon_select(3), "Harpoon Browse File (3)" },
+    ["<leader>4"] = { f.harpoon_select(4), "Harpoon Browse File (4)" },
+    ["<leader>5"] = { f.harpoon_select(5), "Harpoon Browse File (5)" },
+    ["<leader>6"] = { f.harpoon_select(6), "Harpoon Browse File (6)" },
+    ["<leader>7"] = { f.harpoon_select(7), "Harpoon Browse File (7)" },
+    ["<leader>8"] = { f.harpoon_select(8), "Harpoon Browse File (8)" },
+    ["<leader>9"] = { f.harpoon_select(9), "Harpoon Browse File (9)" },
+    ["<leader>0"] = { f.harpoon_select(10), "Harpoon Browse File (10)" },
+    ["<A-p>"] = { function() require("harpoon"):list():prev() end, "Harpoon Next" },
+    ["<A-n>"] = { function() require("harpoon"):list():next() end, "Harpoon Prev" },
+  }
+}
+
+M.todo_comments = {
+  n = {
+    ["gt"] = { "<cmd>TodoQuickFix<CR>", "Show TODOs: Quickfix" },
+    ["gT"] = { "<cmd>TodoTrouble<CR>", "Show TODOs: Trouble" },
+    ["<leader>ft"] = { "<cmd>TodoTelescope<CR>", "Show TODOs: Telescope" },
+  }
+}
+
+M.illuminate = {
+  n = {
+    ["[r"] = {
+      function()
+        require("illuminate").goto_prev_reference()
+        -- vim.api.nvim_feedkeys("zz", "n", false)
+      end,
+      "Illuminate: Goto next reference"
+    },
+    ["]r"] = {
+      function()
+        require("illuminate").goto_next_reference()
+        -- vim.api.nvim_feedkeys("zz", "n", false)
+      end,
+      "Illuminate: Goto next reference"
+    }
+  }
+}
+
+M.treesitter_playground = {
+  plugin = true,
+  -- TODO use same shape convention and transform
+  n = {
+    {"<leader>ht", "<cmd>TSHighlightCapturesUnderCursor<CR>", "Show Treesitter Type Popover" },
+    {"<leader>hT", "<cmd>TSPlaygroundToggle<CR>", "Open Treesitter Playground" },
+  },
+}
+
+local scroll_speed = "50"
+M.neoscroll = {
+  plugin = true,
+  n = {
+    ["<C-u>"] = { "scroll", { "-vim.wo.scroll", "true", scroll_speed } },
+    ["<C-d>"] = { "scroll", { "vim.wo.scroll", "true", scroll_speed } },
+    ["<C-b>"] = { "scroll", { "-vim.api.nvim_win_get_height(0)", "true", scroll_speed } },
+    ["<C-f>"] = { "scroll", { "vim.api.nvim_win_get_height(0)", "true", scroll_speed } },
+    ["<C-y>"] = { "scroll", { "-0.10", "false", scroll_speed } },
+    ["<C-e>"] = { "scroll", { "0.10", "false", scroll_speed } },
+    ["zt"] = { "zt", { scroll_speed } },
+    ["zz"] = { "zz", { scroll_speed } },
+    ["zb"] = { "zb", { scroll_speed } },
+  },
+}
+
 for _name, config in pairs(M) do
-  for mode, mappings in pairs(config) do
-    for lhs, mapping in pairs(mappings) do
-      vim.keymap.set(mode, lhs, mapping[1], { desc = mapping[2] })
+  if not config.plugin then
+    for mode, mappings in pairs(config) do
+      for lhs, mapping in pairs(mappings) do
+        vim.keymap.set(mode, lhs, mapping[1], { desc = mapping[2] })
+      end
     end
   end
 end
@@ -152,3 +232,4 @@ end
 --   { desc = "File Format with conform" }
 -- )
 
+return M
