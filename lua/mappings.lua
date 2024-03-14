@@ -9,11 +9,9 @@ local function telescope_cmd(cmd)
   end
 end
 
-local function trouble_cmd(cmd)
-  return function()
-    require("trouble").toggle(cmd)
-  end
-end
+local disabled = {
+  n = { "<C-n>", "<C-s>", "<leader>h", "<leader>n", "<leader>v", "<tab>", "<S-tab>" },
+}
 
 M.general = {
   i = {
@@ -185,8 +183,8 @@ M.treesitter_playground = {
   plugin = true,
   -- TODO use same shape convention and transform
   n = {
-    {"<leader>ht", "<cmd>TSHighlightCapturesUnderCursor<CR>", "Show Treesitter Type Popover" },
-    {"<leader>hT", "<cmd>TSPlaygroundToggle<CR>", "Open Treesitter Playground" },
+    { "<leader>ht", "<cmd>TSHighlightCapturesUnderCursor<CR>", "Show Treesitter Type Popover" },
+    { "<leader>hT", "<cmd>TSPlaygroundToggle<CR>", "Open Treesitter Playground" },
   },
 }
 
@@ -208,8 +206,8 @@ M.neoscroll = {
 
 M.conjure = {
   n = {
-    ["<localleader>tt"] = { ":ConjureCljRunCurrentTest<CR>"},
-    ["<localleader>ct"] = { "m'O<esc>80i;<esc>`'"}
+    ["<localleader>tt"] = { ":ConjureCljRunCurrentTest<CR>" },
+    ["<localleader>ct"] = { "m'O<esc>80i;<esc>`'" }
   }
 }
 
@@ -235,6 +233,14 @@ M.paredit = {
   },
 }
 
+-- Clear disabled keymaps
+for mode, mappings in pairs(disabled) do
+  for _, keys in pairs(mappings) do
+    vim.keymap.del(mode, keys)
+  end
+end
+
+-- Setup enabled keymaps
 for _name, config in pairs(M) do
   if not config.plugin then
     for mode, mappings in pairs(config) do
