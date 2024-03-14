@@ -15,10 +15,12 @@ M.ui = {
     Comment = { italic = true },
     ["@comment"] = { italic = true },
     ["@symbol"] = { fg = "blue" },
-    ["@string.special.symbol"] = { fg = "blue" },
     ["@function"] = { fg = "yellow" },
     ["@function.call"] = { fg = "yellow" },
+  },
 
+  hl_add = {
+    ["@string.special.symbol"] = { fg = "blue" },
   },
 
   statusline = {
