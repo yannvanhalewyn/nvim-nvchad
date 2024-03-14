@@ -49,8 +49,4 @@ return {
     -- Consider using keys with a toggle
     ft = { "clojure", "lua" }
   },
-  {
-    "nvim-treesitter/playground",
-    keys = require("mappings").treesitter_playground["n"]
-  },
 }

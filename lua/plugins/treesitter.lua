@@ -18,4 +18,8 @@ return {
       }
     },
   },
+  {
+    "nvim-treesitter/playground",
+    keys = require("mappings").treesitter_playground["n"]
+  },
 }
