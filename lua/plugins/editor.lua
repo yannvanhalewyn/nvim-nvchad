@@ -49,4 +49,8 @@ return {
     -- Consider using keys with a toggle
     ft = { "clojure", "lua" }
   },
+  {
+    "NvChad/nvim-colorizer.lua",
+    enabled = false
+  }
 }
