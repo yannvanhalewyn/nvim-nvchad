@@ -1,5 +1,5 @@
 require("nvchad.mappings")
-local f = require("mylib.functions")
+local f = require("functions")
 
 local M = {}
 
@@ -203,6 +203,35 @@ M.neoscroll = {
     ["zt"] = { "zt", { scroll_speed } },
     ["zz"] = { "zz", { scroll_speed } },
     ["zb"] = { "zb", { scroll_speed } },
+  },
+}
+
+M.conjure = {
+  n = {
+    ["<localleader>tt"] = { ":ConjureCljRunCurrentTest<CR>"},
+    ["<localleader>ct"] = { "m'O<esc>80i;<esc>`'"}
+  }
+}
+
+M.parpar = {
+  n = {
+    -- Fix J breaking multiline sexps
+    -- https://github.com/gpanders/nvim-parinfer/issues/11
+    ["J"] = { "A<space><esc>J" },
+  },
+}
+
+M.paredit = {
+  plugin = true,
+  n = {
+    ["<A-H>"] = { function() require("nvim-paredit").api.slurp_backwards() end, "Slurp backwards" },
+    ["<A-J>"] = { function() require("nvim-paredit").api.barf_backwards() end, "Barf backwards" },
+    ["<A-K>"] = { function() require("nvim-paredit").api.barf_forwards() end, "Barf forwards" },
+    ["<A-L>"] = { function() require("nvim-paredit").api.slurp_forwards() end, "Slurp forwards" },
+    ["<localleader>w"] = { f.paredit_wrap("( ", ")", "inner_start"), "Wrap element insert head" },
+    ["<localleader>W"] = { f.paredit_wrap("(", ")", "inner_end"), "Wrap element insert tail" },
+    ["<localleader>i"] = { f.paredit_wrap("( ", ")", "inner_start"), "Wrap form insert head" },
+    ["<localleader>I"] = { f.paredit_wrap("(", ")", "inner_end"), "Wrap form insert tail" },
   },
 }
 
