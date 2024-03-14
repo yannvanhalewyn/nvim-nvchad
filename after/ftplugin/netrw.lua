@@ -117,4 +117,5 @@ vim.api.nvim_create_autocmd("TextChanged", {
 })
 
 vim.keymap.set("n", "V", ntrw_open_to_right, { buffer = true, desc = "Open file in split to the right" })
+vim.keymap.set("n", "q", vim.cmd.quit, {buffer = true, desc = 'Quit (or Close) help, quickfix, netrw, etc windows', })
 vim.keymap.set("n", "<C-q>", vim.cmd.quit, {buffer = true, desc = 'Quit (or Close) help, quickfix, netrw, etc windows', })
