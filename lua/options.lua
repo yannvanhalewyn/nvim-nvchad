@@ -16,3 +16,7 @@ autocmd("BufWritePre", {
     vim.fn.setpos(".", save_cursor)
   end,
 })
+
+-- Setup HtmlToHiccup
+vim.cmd("command! HtmlToHiccup '<,'>!xargs -0 hiccup-cli --html")
+vim.api.nvim_create_user_command("HtmlToHiccup", "'<,'>!xargs -0 hiccup-cli --html", {range=true})
