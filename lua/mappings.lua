@@ -12,25 +12,23 @@ end
 
 M.editing = {
   i = {
-    ["<C-y>"] = { "<C-o>p", "Put" },
+    ["<C-y>"] = { "<C-o>p", "Insert Paste" },
   },
   n = {
-    ["<esc>"] = { "<cmd>noh<CR>", "General Clear highlights" },
     -- Rebind increment to not use tmux prefix
-    ["+"] = { "<C-a>", "Increment" },
-    ["-"] = { "<C-x>", "Decrement" },
-    ["n"] = { "nzz", "Next Search Result" },
-    ["N"] = { "Nzz", "Prev Search Result" },
+    ["<esc>"] = { "<cmd>noh<CR>", "Nav Clear highlights" },
+    ["+"] = { "<C-a>", "Edit Increment" },
+    ["-"] = { "<C-x>", "Edit Decrement" },
     ["S"] = { ":%s/<C-r><C-w>/<C-r><C-w>/gI<left><left><left>", "Replace Current Word" },
     -- ["p"] = { ':norm "+]p<CR>', "Paste and indent" },
     -- ["P"] = { ':norm "+[p<CR>', "Paste and indent" },
   },
 
   v = {
-    ["<A-j>"] = { ":m '>+1<CR>gv=gv", "Move Selection Down" },
-    ["<A-k>"] = { ":m '<-2<CR>gv=gv", "Move Selection Up" },
+    ["<A-j>"] = { ":m '>+1<CR>gv=gv", "Edit Move Selection Down" },
+    ["<A-k>"] = { ":m '<-2<CR>gv=gv", "Edit Move Selection Up" },
     -- Actually pasting already does this in xmode so ¯\_(ツ)_/¯
-    ["<leader>p"] = { '"_dP', "Paste without losing register" },
+    ["<leader>p"] = { '"_dP', "Edit Paste without losing register" },
   },
 
   c = {
@@ -106,6 +104,7 @@ M.help = {
   n = {
     ["<leader>hk"] = { telescope_cmd "keymaps", "Help Keybindings" },
     ["<leader>hh"] = { telescope_cmd "help_tags", "Help Tags" },
+    ["<leader>hc"] = { telescope_cmd "highlights", "Help Highlights" },
   }
 }
 
@@ -117,7 +116,7 @@ M.go = {
 
 M.toggle = {
   n = {
-    ["<leader>ch"] = { "<cmd>NvCheatsheet<CR>", "Toggle NvCheatsheet" },
+    ["<leader>ch"] = { ":vs<cr><cmd>NvCheatsheet<CR>", "Toggle NvCheatsheet" },
     ["<leader>tb"] = { function() require("gitsigns").toggle_current_line_blame() end, "Toggle LineBlame", },
     ["<leader>tc"] = { f.toggle_color_column, "Toggle Color Column" },
     ["<leader>td"] = { f.toggle_diagnostics, "Toggle Diagnostics" },
@@ -142,7 +141,7 @@ M.code = {
     ["]q"] = { vim.cmd.cnext, "Quickfix Next" },
     ["<C-k>"] = { vim.lsp.buf.signature_help, "Code Signature Help" },
     ["<leader>cr"] = { telescope_cmd "lsp_references", "Code Telescope References" },
-    ["<leader>cR"] = { function() require("nvchad.renamer").open() end, "Code rename", },
+    ["<leader>cR"] = { function() require("nvchad.renamer").open() end, "Code Rename", },
     ["<leader>ce"] = { vim.diagnostic.setqflist, "Code Project Diagnostics Quickfix" },
     -- ["<leader>/"] = { telescope_cmd "current_buffer_fuzzy_find", "Find In Current Buffer" },
     ["<leader>/"] = {
