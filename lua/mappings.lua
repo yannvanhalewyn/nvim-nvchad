@@ -130,25 +130,26 @@ M.toggle = {
 }
 
 M.code = {
-  [{ "i", "n" }] = {
+  i = {
     ["<C-k>"] = { vim.lsp.buf.signature_help, "LSP: Signature Help" },
   },
   n = {
-    ["[e"] = { vim.diagnostic.goto_prev, "Prev Error" },
-    ["]e"] = { vim.diagnostic.goto_next, "Next Error" },
+    ["[e"] = { vim.diagnostic.goto_prev, "Code Prev Error" },
+    ["]e"] = { vim.diagnostic.goto_next, "Code Next Error" },
+    ["[c"] = { function() require("gitsigns").prev_hunk() end, "Code Next Unstanged Hunk" },
+    ["]c"] = { function() require("gitsigns").next_hunk() end, "Code Previous Unstanged Hunk" },
     ["[q"] = { vim.cmd.cprev, "Quickfix Prev" },
     ["]q"] = { vim.cmd.cnext, "Quickfix Next" },
-    ["<leader>cr"] = { telescope_cmd "lsp_references", "Code References" },
-    ["<leader>cR"] = {
-      function()
-        require("nvchad.renamer").open()
-      end,
-      "LSP rename",
-    },
-    ["<leader>ce"] = { vim.diagnostic.setqflist, "Code Diagnostics (Buffer)" },
+    ["<C-k>"] = { vim.lsp.buf.signature_help, "Code Signature Help" },
+    ["<leader>cr"] = { telescope_cmd "lsp_references", "Code Telescope References" },
+    ["<leader>cR"] = { function() require("nvchad.renamer").open() end, "Code rename", },
+    ["<leader>ce"] = { vim.diagnostic.setqflist, "Code Project Diagnostics Quickfix" },
     -- ["<leader>/"] = { telescope_cmd "current_buffer_fuzzy_find", "Find In Current Buffer" },
-    ["<leader>/"] = {"Telescope live_grep search_dirs={\"%:p\"} vimgrep_arguments=rg,--color=never,--no-heading,--with-filename,--line-number,--column,--smart-case,--fixed-strings", "Find in Current Buffer"},
-    ["<leader>x"] = { telescope_cmd "live_grep", "Grep" },
+    ["<leader>/"] = {
+      "Telescope live_grep search_dirs={\"%:p\"} vimgrep_arguments=rg,--color=never,--no-heading,--with-filename,--line-number,--column,--smart-case,--fixed-strings",
+      "Code Search File"
+    },
+    ["<leader>x"] = { telescope_cmd "live_grep", "Code Search Project" },
   }
 }
 
@@ -156,14 +157,14 @@ local session = require("tools.session")
 
 M.sessions = {
   n = {
-    ["<leader>sw"] = { session.save_project_session, "Session: Write"},
-    ["<leader>sl"] = { session.load_project_session, "Session: Load" }
+    ["<leader>sw"] = { session.save_project_session, "Session Write"},
+    ["<leader>sl"] = { session.load_project_session, "Session Load" }
   }
 }
 
 M.tools = {
   n = {
-    ["<leader>R"] = { f.refresh_chrome, "Refresh Google Chrome" },
+    ["<leader>R"] = { f.refresh_chrome, "Tools Refresh Google Chrome" },
   }
 }
 
@@ -171,18 +172,12 @@ M.tools = {
 ----------
 M.git = {
   n = {
-    ["<leader>gg"] = { function() require("neogit").open() end, "Open Neogit" },
+    ["<leader>gg"] = { function() require("neogit").open() end, "Git Open" },
     ["<leader>gs"] = { function() require("gitsigns").stage_hunk() end, "Git Stage hunk", },
     ["<leader>gp"] = { function() require("gitsigns").preview_hunk_inline() end, "Git Preview hunk" },
-  },
-}
-
-M.agitator = {
-  n = {
     ["<leader>gB"] = { function() require("agitator").git_blame_toggle {} end, "Git Blame", },
     ["<leader>gf"] = { function() require("agitator").open_file_git_branch() end, "Git Find File", },
-    ["<leader>gt"] = { function() require("agitator").git_time_machine() end, "Git Timemachine",
-    },
+    ["<leader>gt"] = { function() require("agitator").git_time_machine() end, "Git Timemachine", }
   },
 }
 
@@ -214,9 +209,8 @@ M.harpoon = {
 
 M.todo_comments = {
   n = {
-    ["gt"] = { "<cmd>TodoQuickFix<CR>", "Show TODOs: Quickfix" },
-    ["gT"] = { "<cmd>TodoTrouble<CR>", "Show TODOs: Trouble" },
-    ["<leader>ft"] = { "<cmd>TodoTelescope<CR>", "Show TODOs: Telescope" },
+    ["gt"] = { "<cmd>TodoQuickFix<CR>", "TODOS Quickfix" },
+    ["<leader>ft"] = { "<cmd>TodoTelescope<CR>", "TODOS Telescope" },
   }
 }
 
@@ -227,14 +221,14 @@ M.illuminate = {
         require("illuminate").goto_prev_reference()
         -- vim.api.nvim_feedkeys("zz", "n", false)
       end,
-      "Illuminate: Goto next reference"
+      "Code Next Reference"
     },
     ["]r"] = {
       function()
         require("illuminate").goto_next_reference()
         -- vim.api.nvim_feedkeys("zz", "n", false)
       end,
-      "Illuminate: Goto next reference"
+      "Code Prev Reference"
     }
   }
 }
@@ -243,8 +237,8 @@ M.treesitter_playground = {
   plugin = true,
   -- TODO use same shape convention and transform
   n = {
-    { "<leader>ht", "<cmd>TSHighlightCapturesUnderCursor<CR>", "Show Treesitter Type Popover" },
-    { "<leader>hT", "<cmd>TSPlaygroundToggle<CR>", "Open Treesitter Playground" },
+    { "<leader>ht", "<cmd>TSHighlightCapturesUnderCursor<CR>", "Treesitter Type Popover" },
+    { "<leader>hT", "<cmd>TSPlaygroundToggle<CR>", "Treesitter Playground" },
   },
 }
 
@@ -266,8 +260,8 @@ M.neoscroll = {
 
 M.conjure = {
   n = {
-    ["<localleader>tt"] = { ":ConjureCljRunCurrentTest<CR>" },
-    ["<localleader>ct"] = { "m'O<esc>80i;<esc>`'" }
+    ["<localleader>tt"] = { ":ConjureCljRunCurrentTest<CR>", "Clojure Run Test at Point" },
+    ["<localleader>ct"] = { "m'O<esc>80i;<esc>`'", "Clojure Comment Title" }
   }
 }
 
@@ -282,14 +276,16 @@ M.parpar = {
 M.paredit = {
   plugin = true,
   n = {
-    ["<A-H>"] = { function() require("nvim-paredit").api.slurp_backwards() end, "Slurp backwards" },
-    ["<A-J>"] = { function() require("nvim-paredit").api.barf_backwards() end, "Barf backwards" },
-    ["<A-K>"] = { function() require("nvim-paredit").api.barf_forwards() end, "Barf forwards" },
-    ["<A-L>"] = { function() require("nvim-paredit").api.slurp_forwards() end, "Slurp forwards" },
-    ["<localleader>w"] = { f.paredit_wrap("( ", ")", "inner_start"), "Wrap element insert head" },
-    ["<localleader>W"] = { f.paredit_wrap("(", ")", "inner_end"), "Wrap element insert tail" },
-    ["<localleader>i"] = { f.paredit_wrap("( ", ")", "inner_start"), "Wrap form insert head" },
-    ["<localleader>I"] = { f.paredit_wrap("(", ")", "inner_end"), "Wrap form insert tail" },
+    ["<A-H>"] = { function() require("nvim-paredit").api.slurp_backwards() end, "Paredit Slurp backwards" },
+    ["<A-J>"] = { function() require("nvim-paredit").api.barf_backwards() end, "Paredit Barf backwards" },
+    ["<A-K>"] = { function() require("nvim-paredit").api.barf_forwards() end, "Paredit Barf forwards" },
+    ["<A-L>"] = { function() require("nvim-paredit").api.slurp_forwards() end, "Paredit Slurp forwards" },
+    ["<A-]>"] = { f.paredit_wrap("[", "]", "inner_start"), "Paredit Wrap Element ]" },
+    ["<A-}>"] = { f.paredit_wrap("{", "}", "inner_start"), "Paredit Wrap Element }" },
+    ["<localleader>w"] = { f.paredit_wrap("( ", ")", "inner_start"), "Paredit Wrap Element Insert Head" },
+    ["<localleader>W"] = { f.paredit_wrap("(", ")", "inner_end"), "Paredit Wrap Element Insert Tail" },
+    ["<localleader>i"] = { f.paredit_wrap("( ", ")", "inner_start"), "Paredit Wrap Form Insert Head" },
+    ["<localleader>I"] = { f.paredit_wrap("(", ")", "inner_end"), "Paredit Wrap Form Insert Tail" },
   },
 }
 
