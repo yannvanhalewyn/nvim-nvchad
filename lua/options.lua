@@ -17,6 +17,13 @@ autocmd("BufWritePre", {
   end,
 })
 
+-- Reopen buffer at last stored position
+autocmd("BufReadPost", {
+  pattern = "*",
+  -- silent! because may fail with truncated file before stored point
+  command = "silent! normal! g`\"zzzv"
+})
+
 -- Setup HtmlToHiccup
 vim.cmd("command! HtmlToHiccup '<,'>!xargs -0 hiccup-cli --html")
 vim.api.nvim_create_user_command("HtmlToHiccup", "'<,'>!xargs -0 hiccup-cli --html", {range=true})

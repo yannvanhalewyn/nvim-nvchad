@@ -101,7 +101,6 @@ local function draw_icons()
   end
 end
 
--- This sucks
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "netrw",
   callback = function()
