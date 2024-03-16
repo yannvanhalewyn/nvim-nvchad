@@ -1,4 +1,5 @@
 require("nvchad.mappings")
+
 local f = require("functions")
 
 local M = {}
@@ -15,9 +16,8 @@ local disabled = {
   n = { "<C-n>", "<C-s>", "<leader>h", "<leader>n", "<leader>v", "<tab>", "<S-tab>" },
 }
 
-M.general = {
+M.editing = {
   i = {
-    ["<C-k>"] = { vim.lsp.buf.signature_help, "LSP: Signature Help" },
     ["<C-y>"] = { "<C-o>p", "Put" },
   },
   n = {
@@ -27,69 +27,8 @@ M.general = {
     ["n"] = { "nzz", "Next Search Result" },
     ["N"] = { "Nzz", "Prev Search Result" },
     ["S"] = { ":%s/<C-r><C-w>/<C-r><C-w>/gI<left><left><left>", "Replace Current Word" },
-    -- ["<leader>cd"] = { function() vim.lsp.buf.hover() end, "Show doc"},
-    ["<leader>tp"] = { f.toggle_parinfer, "Toggle Parinfer" },
-    ["<leader>td"] = { f.toggle_diagnostics, "Toggle Diagnostics" },
-    ["<leader>tD"] = { f.toggle_diagnostics_virtual_text, "Toggle Diagnostics Virtual Text" },
-    ["<leader>tb"] = { function() require("gitsigns").toggle_current_line_blame() end, "Toggle LineBlame", },
-    ["gs"] = { function() require("luasnip.loaders").edit_snippet_files() end, "Goto Snippet file", },
-    -- ["[b"] = {"<cmd>bprev<CR>", "Prev Buffer"},
-    -- ["]b"] = {"<cmd>bnext<CR>", "Next Buffer"},
-    ["[e"] = { vim.diagnostic.goto_prev, "Prev Error" },
-    ["]e"] = { vim.diagnostic.goto_next, "Next Error" },
-    ["[q"] = { vim.cmd.cprev, "Quickfix Prev" },
-    ["]q"] = { vim.cmd.cnext, "Quickfix Next" },
-    ["[w"] = { vim.cmd.tabprev, "Prev Tab" },
-    ["]w"] = { vim.cmd.tabnext, "Next Tab" },
-    ["<S-tab>"] = { vim.cmd.tabprev, "Prev Tab" },
-    -- ["<tab>"] = {vim.cmd.tabnext, "Next Tab"},
-    -- ["gr"] = { telescope_cmd("lsp_references"), "LSP References" },
-    ["<C-k>"] = { vim.lsp.buf.signature_help, "LSP: Signature Help" },
-    ["<leader>/"] = { telescope_cmd "current_buffer_fuzzy_find", "Find In Current Buffer" },
-    -- ["<leader>/"] = {"Telescope live_grep search_dirs={\"%:p\"} vimgrep_arguments=rg,--color=never,--no-heading,--with-filename,--line-number,--column,--smart-case,--fixed-strings", "Find in Current Buffer"},
-    ["<leader>x"] = { telescope_cmd "live_grep", "Grep" },
-    ["<leader>d"] = { "<cmd>Explore %:h<CR>", "Open Directory" },
-    ["<leader><tab>n"] = { vim.cmd.tabnew, "New Tab" },
-    ["<leader><tab>d"] = { vim.cmd.tabclose, "Quit Tab" },
-    ["<leader>wd"] = { vim.cmd.quit, "Window Quit" },
-    ["<leader>wq"] = { ":wall<CR>:wq<CR>", "Window Quit" },
-    ["<leader>wb"] = { vim.cmd.split, "Window Split Horizontally" },
-    ["<leader>wv"] = { vim.cmd.vsplit, "Window Split Vertically" },
-    -- ["<leader>n"] = {"<cmd>NvimTreeToggle<CR>", "NvimTree Toggle"},
-    ["<leader>n"] = { f.open_netrw_filetree, "Open Filetree" },
-    ["<leader> "] = { telescope_cmd "find_files", "Find files" },
-    ["<leader>bb"] = { telescope_cmd "buffers", "Find buffers" },
-    ["<leader>bm"] = { "<cmd>messages<CR>", "Messages" },
-    ["<leader>cr"] = { telescope_cmd "lsp_references", "Code References" },
-    ["<leader>cR"] = {
-      function()
-        require("nvchad.renamer").open()
-      end,
-      "LSP rename",
-    },
-    ["<leader>ce"] = { vim.diagnostic.setqflist, "Code Diagnostics (Buffer)" },
-    ["<leader>fd"] = { telescope_cmd "diagnostics", "Find Diagnostics" },
-    ["<leader>fr"] = { telescope_cmd "oldfiles", "Find Recent Files" },
-    ["<leader>fg"] = { telescope_cmd "git_files", "Find Git Files" },
-    ["<leader>fR"] = { telescope_cmd "lsp_references", "Find References" },
-    ["<leader>fo"] = { ":Telescope file_browser path=%:p:h select_buffer=true<CR>", "File Browser" },
-    ["<leader>fw"] = { f.grep_current_word, "Find Word at Point" },
-    ["<leader>fW"] = { f.grep_current_WORD, "Find WORD at Point" },
-    ["<leader>fs"] = { vim.cmd.write, "Save File" },
-    ["<leader>fS"] = { "<CMD>wall<CR>", "Save All Files" },
-    ["<leader>hk"] = { telescope_cmd "keymaps", "Help Keybindings" },
-    ["<leader>hh"] = { telescope_cmd "help_tags", "Help Tags" },
-    ["p"] = { ':norm "+]p<CR>', "Paste and indent" },
-    ["P"] = { ':norm "+[p<CR>', "Paste and indent" },
-    ["<leader>R"] = { f.refresh_chrome, "Refresh Google Chrome" },
-    ["<leader>tc"] = { f.toggle_color_column, "Toggle Color Column" },
-    ["<leader>tq"] = { f.toggle_quickfix_window, "Toggle Quickfix Window" },
-    ["<leader>te"] = { vim.diagnostic.open_float, "Toggle Error Message" },
-    ["<leader>w<C-o>"] = { vim.cmd.only, "Close other windows" },
-    ["<leader>wh"] = { ":windo wincmd H<CR>", "Move Window Left" },
-    ["<leader>wj"] = { ":windo wincmd J<CR>", "Move Window Right" },
-    ["<leader>wk"] = { ":windo wincmd K<CR>", "Move Window Down" },
-    ["<leader>wl"] = { ":windo wincmd L<CR>", "Move Window Up" },
+    -- ["p"] = { ':norm "+]p<CR>', "Paste and indent" },
+    -- ["P"] = { ':norm "+[p<CR>', "Paste and indent" },
   },
 
   v = {
@@ -111,6 +50,125 @@ M.general = {
   },
 }
 
+M.buffer = {
+  n = {
+    ["[b"] = {"<cmd>bprev<CR>", "Buffer Previous"},
+    ["]b"] = {"<cmd>bnext<CR>", "Buffer Next"},
+		["<leader>bb"] = { telescope_cmd "buffers", "Buffer Find" },
+		["<leader>bd"] = { ":bd<CR>", "Buffer Delete" },
+		["<leader>bm"] = { "<cmd>messages<CR>", "Buffer Show Messages" },
+  }
+}
+
+M.window = {
+  n = {
+    ["<leader>wd"] = { vim.cmd.quit, "Window Quit" },
+    ["<leader>wq"] = { "<cmd>wq<CR>", "Window Save and Quit" },
+    ["<leader>wQ"] = { "<cmd>qall<CR>", "Window Quit All" },
+    ["<leader>wb"] = { vim.cmd.split, "Window Split Horizontally" },
+    ["<leader>wv"] = { vim.cmd.vsplit, "Window Split Vertically" },
+    ["<leader>w<C-o>"] = { vim.cmd.only, "Window Close other windows" },
+    ["<leader>wh"] = { ":windo wincmd H<CR>", "Window Move Left" },
+    ["<leader>wj"] = { ":windo wincmd J<CR>", "Window Move Right" },
+    ["<leader>wk"] = { ":windo wincmd K<CR>", "Window Move Down" },
+    ["<leader>wl"] = { ":windo wincmd L<CR>", "Window Move Up" },
+  }
+}
+
+M.tab = {
+  n = {
+    ["[w"] = { vim.cmd.tabprev, "Tab Previous" },
+    ["]w"] = { vim.cmd.tabnext, "Tab Next" },
+    ["<leader><tab>n"] = { vim.cmd.tabnew, "Tab New" },
+    ["<leader><tab>d"] = { vim.cmd.tabclose, "Tab Delete" },
+    ["<S-tab>"] = { vim.cmd.tabprev, "Tab Previous" },
+    -- ["<tab>"] = {vim.cmd.tabnext, "Next Tab"}, -- Conflicts with <C-i>
+  }
+}
+
+M.find = {
+  n = {
+    ["<leader> "] = { telescope_cmd "find_files", "Files Find in Project" },
+    ["<leader>d"] = { "<cmd>Explore %:h<CR>", "Files open current dir" },
+    ["<leader>n"] = { f.open_netrw_filetree, "Open Filetree" },
+    ["<leader>fd"] = { telescope_cmd "diagnostics", "Find Diagnostics" },
+    ["<leader>fr"] = { telescope_cmd "oldfiles", "Find Recent Files" },
+    ["<leader>fg"] = { telescope_cmd "git_files", "Find Git Files" },
+    ["<leader>fR"] = { telescope_cmd "lsp_references", "Find References" },
+    ["<leader>fo"] = { ":Telescope file_browser path=%:p:h select_buffer=true<CR>", "File Browser" },
+    ["<leader>fw"] = { f.grep_current_word, "Find Word at Point" },
+    ["<leader>fW"] = { f.grep_current_WORD, "Find WORD at Point" },
+    ["<leader>fs"] = { vim.cmd.write, "Save File" },
+    ["<leader>fS"] = { "<CMD>wall<CR>", "Save All Files" },
+  }
+}
+
+M.help = {
+  n = {
+    ["<leader>hk"] = { telescope_cmd "keymaps", "Help Keybindings" },
+    ["<leader>hh"] = { telescope_cmd "help_tags", "Help Tags" },
+  }
+}
+
+M.go = {
+  n = {
+    ["gs"] = { function() require("luasnip.loaders").edit_snippet_files() end, "Goto Snippet file", },
+  }
+}
+
+M.toggle = {
+  n = {
+    ["<leader>tb"] = { function() require("gitsigns").toggle_current_line_blame() end, "Toggle LineBlame", },
+    ["<leader>tc"] = { f.toggle_color_column, "Toggle Color Column" },
+    ["<leader>td"] = { f.toggle_diagnostics, "Toggle Diagnostics" },
+    ["<leader>tD"] = { f.toggle_diagnostics_virtual_text, "Toggle Diagnostics Virtual Text" },
+    ["<leader>te"] = { vim.diagnostic.open_float, "Toggle Error Message" },
+    ["<leader>tp"] = { f.toggle_parinfer, "Toggle Parinfer" },
+    ["<leader>tq"] = { f.toggle_quickfix_window, "Toggle Quickfix Window" },
+    ["<leader>tr"] = { "<cmd>set rnu!<CR>", "Toggle Relative number" },
+  }
+}
+
+M.code = {
+  [{ "i", "n" }] = {
+    ["<C-k>"] = { vim.lsp.buf.signature_help, "LSP: Signature Help" },
+  },
+  n = {
+    ["[e"] = { vim.diagnostic.goto_prev, "Prev Error" },
+    ["]e"] = { vim.diagnostic.goto_next, "Next Error" },
+    ["[q"] = { vim.cmd.cprev, "Quickfix Prev" },
+    ["]q"] = { vim.cmd.cnext, "Quickfix Next" },
+    ["<leader>cr"] = { telescope_cmd "lsp_references", "Code References" },
+    ["<leader>cR"] = {
+      function()
+        require("nvchad.renamer").open()
+      end,
+      "LSP rename",
+    },
+    ["<leader>ce"] = { vim.diagnostic.setqflist, "Code Diagnostics (Buffer)" },
+    -- ["<leader>/"] = { telescope_cmd "current_buffer_fuzzy_find", "Find In Current Buffer" },
+    ["<leader>/"] = {"Telescope live_grep search_dirs={\"%:p\"} vimgrep_arguments=rg,--color=never,--no-heading,--with-filename,--line-number,--column,--smart-case,--fixed-strings", "Find in Current Buffer"},
+    ["<leader>x"] = { telescope_cmd "live_grep", "Grep" },
+  }
+}
+
+local session = require("tools.session")
+
+M.sessions = {
+  n = {
+    ["<leader>sw"] = { session.save_project_session, "Session: Write"},
+    ["<leader>sl"] = { session.load_project_session, "Session: Load" }
+  }
+}
+
+M.tools = {
+  n = {
+    ["<leader>R"] = { f.refresh_chrome, "Refresh Google Chrome" },
+  }
+}
+
+-- Plugins
+----------
 M.git = {
   n = {
     ["<leader>gg"] = { function() require("neogit").open() end, "Open Neogit" },
@@ -252,21 +310,5 @@ for _name, config in pairs(M) do
     end
   end
 end
-
--- local mappings = vim.api.nvim_get_keymap("n")
--- for _, v in ipairs(mappings) do
---    -- get word before |
---   -- local desc = v.desc:match("([^|]+)%s*|")
---    -- map("n", v.lhs, v.rhs or v.callback, { desc = desc })
--- end
-
-
--- local map = vim.keymap.set
-
--- map(
---   "n", "<leader>fm",
---   function() require("conform").format() end,
---   { desc = "File Format with conform" }
--- )
 
 return M
