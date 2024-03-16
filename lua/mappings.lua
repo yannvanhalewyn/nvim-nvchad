@@ -1,5 +1,3 @@
-require("nvchad.mappings")
-
 local f = require("functions")
 
 local M = {}
@@ -12,15 +10,12 @@ local function telescope_cmd(cmd)
   end
 end
 
-local disabled = {
-  n = { "<C-n>", "<C-s>", "<leader>h", "<leader>n", "<leader>v", "<tab>", "<S-tab>" },
-}
-
 M.editing = {
   i = {
     ["<C-y>"] = { "<C-o>p", "Put" },
   },
   n = {
+    ["<esc>"] = { "<cmd>noh<CR>", "General Clear highlights" },
     -- Rebind increment to not use tmux prefix
     ["+"] = { "<C-a>", "Increment" },
     ["-"] = { "<C-x>", "Decrement" },
@@ -62,6 +57,10 @@ M.buffer = {
 
 M.window = {
   n = {
+    [ "<C-h>"] = { "<C-w>h", "Window Switch left" },
+    [ "<C-l>"] = { "<C-w>l", "Window Switch Right" },
+    [ "<C-j>"] = { "<C-w>j", "Window Switch Down" },
+    [ "<C-k>"] = { "<C-w>k", "Window Switch Up" },
     ["<leader>wd"] = { vim.cmd.quit, "Window Quit" },
     ["<leader>wq"] = { "<cmd>wq<CR>", "Window Save and Quit" },
     ["<leader>wQ"] = { "<cmd>qall<CR>", "Window Quit All" },
@@ -88,18 +87,18 @@ M.tab = {
 
 M.find = {
   n = {
-    ["<leader> "] = { telescope_cmd "find_files", "Files Find in Project" },
-    ["<leader>d"] = { "<cmd>Explore %:h<CR>", "Files open current dir" },
-    ["<leader>n"] = { f.open_netrw_filetree, "Open Filetree" },
+    ["<leader> "] = { telescope_cmd "find_files", "Find Project Files" },
+    ["<leader>fa"] = { "<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>", "Find All Files" },
     ["<leader>fd"] = { telescope_cmd "diagnostics", "Find Diagnostics" },
-    ["<leader>fr"] = { telescope_cmd "oldfiles", "Find Recent Files" },
     ["<leader>fg"] = { telescope_cmd "git_files", "Find Git Files" },
-    ["<leader>fR"] = { telescope_cmd "lsp_references", "Find References" },
-    ["<leader>fo"] = { ":Telescope file_browser path=%:p:h select_buffer=true<CR>", "File Browser" },
+    ["<leader>fr"] = { telescope_cmd "oldfiles", "Find Recent Files" },
+    ["<leader>fs"] = { vim.cmd.write, "File Save" },
+    ["<leader>fS"] = { "<CMD>wall<CR>", "File Save All" },
+    ["<leader>ft"] = { telescope_cmd "themes", { "Find Themes" }},
     ["<leader>fw"] = { f.grep_current_word, "Find Word at Point" },
     ["<leader>fW"] = { f.grep_current_WORD, "Find WORD at Point" },
-    ["<leader>fs"] = { vim.cmd.write, "Save File" },
-    ["<leader>fS"] = { "<CMD>wall<CR>", "Save All Files" },
+    ["<leader>d"] = { "<cmd>Explore %:h<CR>", "Find Current Directory" },
+    ["<leader>n"] = { f.open_netrw_filetree, "Find Filetree" },
   }
 }
 
@@ -118,6 +117,7 @@ M.go = {
 
 M.toggle = {
   n = {
+    ["<leader>ch"] = { "<cmd>NvCheatsheet<CR>", "Toggle NvCheatsheet" },
     ["<leader>tb"] = { function() require("gitsigns").toggle_current_line_blame() end, "Toggle LineBlame", },
     ["<leader>tc"] = { f.toggle_color_column, "Toggle Color Column" },
     ["<leader>td"] = { f.toggle_diagnostics, "Toggle Diagnostics" },
@@ -288,13 +288,6 @@ M.paredit = {
     ["<localleader>I"] = { f.paredit_wrap("(", ")", "inner_end"), "Paredit Wrap Form Insert Tail" },
   },
 }
-
--- Clear disabled keymaps
-for mode, mappings in pairs(disabled) do
-  for _, keys in pairs(mappings) do
-    vim.keymap.del(mode, keys)
-  end
-end
 
 -- Setup enabled keymaps
 for _name, config in pairs(M) do
