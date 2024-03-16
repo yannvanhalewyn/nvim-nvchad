@@ -3,6 +3,8 @@ local f = require("functions")
 
 local M = {}
 
+vim.g.maplocalleader = ","
+
 local function telescope_cmd(cmd)
   return function()
     require("telescope.builtin")[cmd]()
