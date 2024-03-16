@@ -48,9 +48,5 @@ return {
     -- 16ms loading time, lazy load on clojure
     -- Consider using keys with a toggle
     ft = { "clojure", "lua" }
-  },
-  {
-    "NvChad/nvim-colorizer.lua",
-    enabled = false
   }
 }
