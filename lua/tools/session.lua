@@ -13,6 +13,7 @@ M.save_project_session = function()
   local session_file = project_session_file()
   make_parents(session_file)
   vim.cmd("mksession! " .. session_file)
+  print("Wrote session: " .. session_file)
 end
 
 M.load_project_session = function()

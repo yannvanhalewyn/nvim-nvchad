@@ -15,18 +15,18 @@ M.editing = {
     ["<C-y>"] = { "<C-o>p", "Insert Paste" },
   },
   n = {
+    ["j"] = { "gj" },
+    ["k"] = { "gk" },
     -- Rebind increment to not use tmux prefix
     ["<esc>"] = { "<cmd>noh<CR>", "Nav Clear highlights" },
     ["+"] = { "<C-a>", "Edit Increment" },
     ["-"] = { "<C-x>", "Edit Decrement" },
     ["S"] = { ":%s/<C-r><C-w>/<C-r><C-w>/gI<left><left><left>", "Replace Current Word" },
-    -- ["p"] = { ':norm "+]p<CR>', "Paste and indent" },
-    -- ["P"] = { ':norm "+[p<CR>', "Paste and indent" },
   },
 
   v = {
-    ["<A-j>"] = { ":m '>+1<CR>gv=gv", "Edit Move Selection Down" },
-    ["<A-k>"] = { ":m '<-2<CR>gv=gv", "Edit Move Selection Up" },
+    ["<A-J>"] = { ":m '>+1<CR>gv=gv", "Edit Move Selection Down" },
+    ["<A-K>"] = { ":m '<-2<CR>gv=gv", "Edit Move Selection Up" },
     -- Actually pasting already does this in xmode so ¯\_(ツ)_/¯
     ["<leader>p"] = { '"_dP', "Edit Paste without losing register" },
   },
@@ -61,10 +61,10 @@ M.window = {
     [ "<C-k>"] = { "<C-w>k", "Window Switch Up" },
     ["<leader>wd"] = { vim.cmd.quit, "Window Quit" },
     ["<leader>wq"] = { "<cmd>wq<CR>", "Window Save and Quit" },
-    ["<leader>wQ"] = { "<cmd>qall<CR>", "Window Quit All" },
+    ["<leader>wQ"] = { "<cmd>wall<cr><cmd>qall<CR>", "Window Quit All" },
     ["<leader>wb"] = { vim.cmd.split, "Window Split Horizontally" },
     ["<leader>wv"] = { vim.cmd.vsplit, "Window Split Vertically" },
-    ["<leader>w<C-o>"] = { vim.cmd.only, "Window Close other windows" },
+    ["<leader>wo"] = { vim.cmd.only, "Window Close other windows" },
     ["<leader>wh"] = { ":windo wincmd H<CR>", "Window Move Left" },
     ["<leader>wj"] = { ":windo wincmd J<CR>", "Window Move Right" },
     ["<leader>wk"] = { ":windo wincmd K<CR>", "Window Move Down" },
@@ -79,7 +79,6 @@ M.tab = {
     ["<leader><tab>n"] = { vim.cmd.tabnew, "Tab New" },
     ["<leader><tab>d"] = { vim.cmd.tabclose, "Tab Delete" },
     ["<S-tab>"] = { vim.cmd.tabprev, "Tab Previous" },
-    -- ["<tab>"] = {vim.cmd.tabnext, "Next Tab"}, -- Conflicts with <C-i>
   }
 }
 
@@ -92,7 +91,7 @@ M.find = {
     ["<leader>fr"] = { telescope_cmd "oldfiles", "Find Recent Files" },
     ["<leader>fs"] = { vim.cmd.write, "File Save" },
     ["<leader>fS"] = { "<CMD>wall<CR>", "File Save All" },
-    ["<leader>ft"] = { telescope_cmd "themes", { "Find Themes" }},
+    ["<leader>fT"] = { telescope_cmd "themes", "Find Themes"},
     ["<leader>fw"] = { f.grep_current_word, "Find Word at Point" },
     ["<leader>fW"] = { f.grep_current_WORD, "Find WORD at Point" },
     ["<leader>d"] = { "<cmd>Explore %:h<CR>", "Find Current Directory" },
@@ -140,12 +139,12 @@ M.code = {
     ["[q"] = { vim.cmd.cprev, "Quickfix Prev" },
     ["]q"] = { vim.cmd.cnext, "Quickfix Next" },
     ["<C-k>"] = { vim.lsp.buf.signature_help, "Code Signature Help" },
+    ["<leader>cf"] = { function() vim.lsp.buf.format({ async = true }) end, "Code Format" },
     ["<leader>cr"] = { telescope_cmd "lsp_references", "Code Telescope References" },
-    ["<leader>cR"] = { function() require("nvchad.renamer").open() end, "Code Rename", },
+    ["<leader>cR"] = { function() require("nvchad.lsp.renamer")() end, "Code Rename", },
     ["<leader>ce"] = { vim.diagnostic.setqflist, "Code Project Diagnostics Quickfix" },
-    -- ["<leader>/"] = { telescope_cmd "current_buffer_fuzzy_find", "Find In Current Buffer" },
     ["<leader>/"] = {
-      "Telescope live_grep search_dirs={\"%:p\"} vimgrep_arguments=rg,--color=never,--no-heading,--with-filename,--line-number,--column,--smart-case,--fixed-strings",
+      ":Telescope live_grep search_dirs={\"%:p\"} vimgrep_arguments=rg,--color=never,--no-heading,--with-filename,--line-number,--column,--smart-case,--fixed-strings<cr>",
       "Code Search File"
     },
     ["<leader>x"] = { telescope_cmd "live_grep", "Code Search Project" },
@@ -259,8 +258,10 @@ M.neoscroll = {
 
 M.conjure = {
   n = {
-    ["<localleader>tt"] = { ":ConjureCljRunCurrentTest<CR>", "Clojure Run Test at Point" },
-    ["<localleader>ct"] = { "m'O<esc>80i;<esc>`'", "Clojure Comment Title" }
+    ["<localleader>tt"] = { "<cmd>ConjureCljRunCurrentTest<CR>", "Clojure Run Test at Point" },
+    ["<localleader>ct"] = { "m'O<esc>80i;<esc>`'", "Clojure Comment Title" },
+    ["<localleader>cr"] = { "<cmd>ConjureCljRefreshChanged<CR>", "Clojure Refresh Changed" },
+    ["<localleader>cR"] = { "<cmd>ConjureCljRefreshAll<CR>", "Clojure Refresh All" }
   }
 }
 
@@ -268,7 +269,7 @@ M.parpar = {
   n = {
     -- Fix J breaking multiline sexps
     -- https://github.com/gpanders/nvim-parinfer/issues/11
-    ["J"] = { "A<space><esc>J" },
+    -- ["J"] = { "A<space><esc>J" },
   },
 }
 
@@ -289,7 +290,7 @@ M.paredit = {
 }
 
 -- Setup enabled keymaps
-for _name, config in pairs(M) do
+for _, config in pairs(M) do
   if not config.plugin then
     for mode, mappings in pairs(config) do
       for lhs, mapping in pairs(mappings) do

@@ -34,6 +34,8 @@ M.toggle_quickfix_window = function()
   end
 end
 
+vim.g.diagnostics_active = true
+
 M.toggle_diagnostics = function()
   if vim.g.diagnostics_active then
     vim.g.diagnostics_active = false
