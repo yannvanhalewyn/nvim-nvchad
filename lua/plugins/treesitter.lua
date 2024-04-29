@@ -12,6 +12,7 @@ return {
         "markdown",
         "markdown_inline",
         "clojure",
+        "kotlin",
       },
       highlight = {
         additional_vim_regex_highlighting = false
