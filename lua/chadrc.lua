@@ -48,23 +48,24 @@ M.ui = {
     ["@symbol"] = { fg = "blue" },
     ["@function"] = { fg = "yellow" },
     ["@function.call"] = { fg = "yellow" },
-    DiffAdd = { fg = "#7d9c53", bg = "#31352b" },
-    DiffDelete = { fg = "#e06c75", bg = "#511c21" },
-    -- DiffDelete = { bg = "#431a1e" },
-    DiffChange = { fg = "NONE" },
-    DiffText = { bg = "yellow", fg = "NONE", bold = true }, -- Part of changed line that actually changed
+    DiffAdd = { fg = "NONE", bg = "#31352b" },
+    DiffDelete = { fg = "NONE", bg = "#511c21" },
+    -- Part of changed line that actually changed
+    DiffText = { fg = "NONE", bg = "#373b43", bold = true },
   },
 
   hl_add = {
     ["@string.special.symbol"] = { fg = "blue" },
+
     NeogitDiffAdd = { fg = "#7d9c53" },
     -- Neogit uses get_fg("Error"), which is dark in my theme not red.
     NeogitDiffDelete = { fg = "#e06c75" },
     NeogitDiffDeleteHighlight = { link = "DiffDelete" },
-
-    -- NeogitDiffAdd = { bg = "none" },
     NeogitChangeModified = { fg = "yellow" },
-    NeogitChangeDeleted = { fg = "red" }
+    NeogitChangeDeleted = { fg = "red" },
+
+    DiffviewDiffChange = { fg = "NONE", bg = "#2d3139" },
+    DiffviewDiffAddAsDelete = { link = "DiffDelete" },
   },
 
   statusline = {
