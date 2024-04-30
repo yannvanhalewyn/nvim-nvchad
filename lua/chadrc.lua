@@ -1,7 +1,7 @@
 local M = {}
 
-vim.cmd("highlight NeogitDiffDelete guifg='#e06c75' guibg='#431a1e'")
-vim.cmd("highlight NeogitDiffDeleteHighlight guifg='#e06c75' guibg='#511c21'")
+-- vim.cmd("highlight NeogitDiffDelete guifg='#e06c75' guibg='#431a1e'")
+-- vim.cmd("highlight NeogitDiffDeleteHighlight guifg='#e06c75' guibg='#511c21'")
 vim.cmd("highlight TabLineFill guifg=#2d3139 guibg=black")
 vim.cmd("highlight TabLine guifg=#6f737b guibg=#2d3139")
 
@@ -50,10 +50,24 @@ M.ui = {
     ["@symbol"] = { fg = "blue" },
     ["@function"] = { fg = "yellow" },
     ["@function.call"] = { fg = "yellow" },
+    -- DiffDelete = { bg = "#431a1e" },
+    DiffAdd = { fg = "#7d9c53", bg = "#31352b" },
+    DiffDelete = { fg = "#e06c75", bg = "#511c21" },
+    -- NeogitDiffDelete = { fg = "#e06c75" },
+    DiffChange = { fg = "yellow" },
+    DiffText = { fg = "yellow", bold = true }, -- Part of changed line that actually changed
   },
 
   hl_add = {
     ["@string.special.symbol"] = { fg = "blue" },
+    NeogitDiffAdd = { fg = "#7d9c53" },
+    NeogitDiffDelete = { fg = "#e06c75" },
+    NeogitDiffDeleteHighlight = { link = "DiffDelete" },
+    -- vim.cmd("highlight NeogitDiffDeleteHighlight guifg='#e06c75' guibg='#511c21'")
+
+    -- NeogitDiffAdd = { bg = "none" },
+    NeogitChangeModified = { fg = "yellow" },
+    NeogitChangeDeleted = { fg = "red" }
   },
 
   statusline = {
