@@ -58,6 +58,7 @@ M.ui = {
     ["@string.special.symbol"] = { fg = "blue" },
 
     NeogitDiffAdd = { fg = "#7d9c53" },
+    NeogitDiffAddHighlight = { link = "DiffAdd" },
     -- Neogit uses get_fg("Error"), which is dark in my theme not red.
     NeogitDiffDelete = { fg = "#e06c75" },
     NeogitDiffDeleteHighlight = { link = "DiffDelete" },
