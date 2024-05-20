@@ -28,7 +28,8 @@ return {
         "vimball",
         "vimballPlugin",
         "zip",
-        "zipPlugin",
+        -- Needed for gd'ing into Clojure deps
+        -- "zipPlugin",
         "tutor",
         "rplugin",
         "syntax",
