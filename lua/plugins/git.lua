@@ -3,6 +3,7 @@ return {
     "sindrets/diffview.nvim",
     cmd = "DiffviewOpen",
     config = function()
+      dofile(vim.g.base46_cache .. "git")
       require("diffview").setup({
         enhanced_diff_hl = true
       })
