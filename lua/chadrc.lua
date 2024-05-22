@@ -38,6 +38,7 @@ end
 
 M.ui = {
   theme = "onedark",
+  theme_toggle = { "onedark", "everforest_light"},
   tabufline = {
     enabled = false,
   },

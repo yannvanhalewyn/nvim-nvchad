@@ -128,6 +128,7 @@ M.toggle = {
     ["<leader>tp"] = { f.toggle_parinfer, "Toggle Parinfer" },
     ["<leader>tq"] = { f.toggle_quickfix_window, "Toggle Quickfix Window" },
     ["<leader>tr"] = { "<cmd>set rnu!<CR>", "Toggle Relative number" },
+    ["<leader>tt"] = { function() require("base46").toggle_theme() end, "Toggle Theme" },
   }
 }
 
