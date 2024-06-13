@@ -31,6 +31,7 @@ M.editing = {
     ["<leader>p"] = { '"_dP', "Edit Paste without losing register" },
     [">"] = { ">gv"},
     ["<"] = { "<gv"},
+    -- [":"] = { "y:<C-r>*<C-b>" }, -- Yank selection and put it in a command
   },
 
   c = {
@@ -45,8 +46,34 @@ M.editing = {
   },
 }
 
+M.align = {
+  plugin = true,
+  x = {
+    ["aa"] = {
+      function() require("align").align_to_char({ length = 1 }) end,
+      "Align to char"
+    },
+    ["as"] = {
+      function()
+        require("align").align_to_string({ preview = true, regex = false })
+      end,
+      "Align to word"
+    },
+  },
+  n = {
+    ["gaa"] = {
+      function()
+        local a = require("align")
+        a.operator(a.align_to_char)
+      end,
+      "Align to char motion"
+    },
+  }
+}
+
 M.buffer = {
   n = {
+    ["<C-t>"] = {"<C-^>", "Buffer Alternate"},
     ["[b"] = {"<cmd>bprev<CR>", "Buffer Previous"},
     ["]b"] = {"<cmd>bnext<CR>", "Buffer Next"},
 		["<leader>bb"] = { telescope_cmd "buffers", "Buffer Find" },
@@ -98,7 +125,7 @@ M.find = {
     ["<leader>fW"] = { f.grep_current_WORD, "Find WORD at Point" },
     -- ["<leader>d"] = { "<cmd>Explore %:h<CR>", "Find Current Directory" },
     ["<leader>d"] = { "<cmd>Oil<CR>", "Find Current Directory" },
-    ["<leader>n"] = { f.open_netrw_filetree, "Find Filetree" },
+    -- ["<leader>n"] = { f.open_netrw_filetree, "Find Filetree" },
   }
 }
 
@@ -148,7 +175,6 @@ M.code = {
     ["<leader>cr"] = { telescope_cmd "lsp_references", "Code Telescope References" },
     ["<leader>cR"] = { function() require("nvchad.lsp.renamer")() end, "Code Rename", },
     ["<leader>ce"] = { vim.diagnostic.setqflist, "Code Project Diagnostics Quickfix" },
-    -- ["<leader>/"] = { telescope_cmd "current_buffer_fuzzy_find", "Find In Current Buffer" },
     ["<leader>/"] = {
       ":Telescope live_grep search_dirs={\"%:p\"} vimgrep_arguments=rg,--color=never,--no-heading,--with-filename,--line-number,--column,--smart-case,--fixed-strings<cr>",
       "Code Search File"
@@ -168,13 +194,23 @@ M.sessions = {
 
 M.tools = {
   n = {
-    ["<leader>R"] = { f.refresh_chrome, "Tools Refresh Google Chrome" },
+    ["<leader>R"] = { f.refresh_arc, "Tools Refresh Browser" },
   }
 }
 
 -- Plugins
 ----------
 M.git = {
+  [{ "n", "v" }] = {
+    ["<leader>gll"] = { ":GitLink current_branch<cr>", "Git Link" },
+    ["<leader>glL"] = { ":GitLink! current_branch<cr>", "Git Link (Open)" },
+    ["<leader>glm"] = { ":GitLink default_branch<cr>", "Git Link Master" },
+    ["<leader>glM"] = { ":GitLink! default_branch<cr>", "Git Link Master (Open)" },
+    ["<leader>glc"] = { ":GitLink commit file=./ rev=<c-r><c-w><cr>", "Git Link Commit" },
+    ["<leader>glC"] = { ":GitLink! commit file=./ rev=<c-r><c-w><cr>", "Git Link Commit (Open)" },
+    ["<leader>gld"] = { ":GitLink compare file=./ rev=master..<c-r><c-w>", "Git Link Diff" },
+    ["<leader>glD"] = { ":GitLink! compare file=./ rev=master..<c-r><c-w>", "Git Link Diff (Open)" },
+  },
   n = {
     ["<leader>gg"] = { function() require("neogit").open() end, "Git Open" },
     ["<leader>gr"] = { function() require("gitsigns").reset_hunk() end, "Git Reset Hunk", },
@@ -184,9 +220,20 @@ M.git = {
     ["<leader>gp"] = { function() require("gitsigns").preview_hunk_inline() end, "Git Preview Hunk Inline" },
     ["<leader>gP"] = { function() require("gitsigns").preview_hunk() end, "Git Preview Hunk" },
     ["<leader>gB"] = { function() require("agitator").git_blame_toggle {} end, "Git Blame", },
+    -- Somehow this is set already
+    -- ["<leader>gb"] = { function() require("agitator").git_blame() end, "Browse File on Github", },
+    ["<leader>gd"] = { ":DiffviewOpen<CR>", "Git Diff current index", },
+    ["<leader>gD"] = { ":DiffviewOpen master..HEAD", "Git diff something else", },
     ["<leader>gf"] = { function() require("agitator").open_file_git_branch() end, "Git Find File", },
     ["<leader>gt"] = { function() require("agitator").git_time_machine() end, "Git Timemachine", }
   },
+}
+
+M.nvimtree = {
+  plugin = true,
+  n = {
+    { "<leader>n", ":NvimTreeToggle<cr>", mode = "n", desc = "Toggle NVTree"}
+  }
 }
 
 M.harpoon = {
@@ -204,6 +251,7 @@ M.harpoon = {
     ["<A-j>"] = { f.harpoon_select(2), "Harpoon Browse File (2)" },
     ["<A-k>"] = { f.harpoon_select(3), "Harpoon Browse File (3)" },
     ["<A-l>"] = { f.harpoon_select(4), "Harpoon Browse File (4)" },
+    ["<A-;>"] = { f.harpoon_select(5), "Harpoon Browse File (5)" },
     ["<leader>1"] = { f.harpoon_select(1), "Harpoon Browse File (1)" },
     ["<leader>2"] = { f.harpoon_select(2), "Harpoon Browse File (2)" },
     ["<leader>3"] = { f.harpoon_select(3), "Harpoon Browse File (3)" },
@@ -290,6 +338,7 @@ M.parpar = {
 M.paredit = {
   plugin = true,
   n = {
+    -- ["W"] = {},
     ["<A-H>"] = { function() require("nvim-paredit").api.slurp_backwards() end, "Paredit Slurp backwards" },
     ["<A-J>"] = { function() require("nvim-paredit").api.barf_backwards() end, "Paredit Barf backwards" },
     ["<A-K>"] = { function() require("nvim-paredit").api.barf_forwards() end, "Paredit Barf forwards" },
@@ -325,3 +374,8 @@ for _, config in pairs(M) do
 end
 
 return M
+
+-- ["p"] = { ':norm "+]p<CR>', "Paste and indent" },
+-- ["P"] = { ':norm "+[p<CR>', "Paste and indent" },
+-- ["<tab>"] = {vim.cmd.tabnext, "Next Tab"}, -- Conflicts with <C-i>
+-- ["<leader>/"] = { telescope_cmd "current_buffer_fuzzy_find", "Find In Current Buffer" },

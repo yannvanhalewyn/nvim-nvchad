@@ -2,6 +2,7 @@ return {
   {
     "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
+    cmd = { "TodoTelescope", "TodoQuickFix" },
     opts = {
       highlight = {
         -- Don't highlight rest of TODO body

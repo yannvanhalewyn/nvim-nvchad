@@ -1,4 +1,30 @@
 return {
+  -- Create own compare and commit routers with
+  -- https://github.com/linrongbin16/gitlinker.nvim?tab=readme-ov-file#create-your-own-router
+  {
+    "linrongbin16/gitlinker.nvim",
+    cmd = "GitLink",
+    opts = {
+      router = {
+        -- Usage :GitLink commit [rev=... file=./]
+        commit = {
+          ["^github%.com"] = "https://github.com/"
+            .. "{_A.ORG}/"
+            .. "{_A.REPO}/"
+            .. "commit/"
+            .. "{_A.REV}"
+        },
+        -- Usage :GitLink compare [rev=ref1..ref2 file=./]
+        compare = {
+          ["^github%.com"] = "https://github.com/"
+            .. "{_A.ORG}/"
+            .. "{_A.REPO}/"
+            .. "compare/"
+            .. "{_A.REV}"
+        },
+      },
+    }
+  },
   {
     "sindrets/diffview.nvim",
     cmd = "DiffviewOpen",
