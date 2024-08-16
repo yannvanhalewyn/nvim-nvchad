@@ -31,7 +31,14 @@ return {
     config = function()
       dofile(vim.g.base46_cache .. "git")
       require("diffview").setup({
-        enhanced_diff_hl = true
+        enhanced_diff_hl = true,
+        view = {
+          merge_tool = {
+            layout = "diff3_mixed",
+            -- disable_diagnostics = true,
+            -- winbar_info = true
+          }
+        }
       })
     end
   },
