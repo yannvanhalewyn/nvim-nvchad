@@ -9,7 +9,7 @@ return {
 
           local sources = {
             null_ls.builtins.formatting.prettier.with({
-              filetypes = { "html", "markdown", "css", "clojure" },
+              filetypes = { "html", "markdown", "css", "clojure", "rust", "slint" },
             }),
             null_ls.builtins.formatting.stylua,
           }
@@ -27,7 +27,7 @@ return {
       local lspconfig = require("lspconfig")
       nvchad_lspconfig.defaults()
 
-      local servers = { "html", "cssls", "lua_ls", "clojure_lsp" }
+      local servers = { "html", "cssls", "lua_ls", "clojure_lsp", "rust_analyzer", "slint_lsp" }
 
       for _, lsp in ipairs(servers) do
         lspconfig[lsp].setup({
@@ -54,6 +54,8 @@ return {
         "css-lsp",
         "html-lsp",
         "prettier",
+        "slint-lsp",
+        "rust-analyzer"
       },
     },
   },

@@ -54,6 +54,10 @@ autocmd("BufReadPost", {
 -- Setup HtmlToHiccup
 -- vim.cmd("command! HtmlToHiccup '<,'>!xargs -0 hiccup-cli --html")
 vim.api.nvim_create_user_command("HtmlToHiccup", "'<,'>!xargs -0 hiccup-cli --html", {range=true})
+vim.api.nvim_create_user_command("CljfmtBuffer", "%!cljfmt fix --quiet -", {})
+vim.api.nvim_create_user_command("Cljfmt", "'<,'>!cljfmt fix --quiet -", {range=true})
+vim.api.nvim_create_user_command("JetPrettyEdn", "'<,'>!jet --from edn --to edn --pretty", {range=true})
+-- vim.api.nvim_create_user_command("Cljfmt", "!cljfmt fix <C-r>=expand('%:p')<CR>", {})
 
 -- GUI
 vim.o.guifont = "JetBrainsMonoNL Nerd Font Mono:h14"

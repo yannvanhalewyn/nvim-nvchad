@@ -14,6 +14,8 @@ return {
   s("wor", t("(set! *warn-on-reflection* true)")),
   s("pnm", t("(set! *print-namespace-maps* false)")),
   s("me", fmt("(malli.dev.pretty/explain {})", { i(1) })),
+  s("test", t("(clojure.test/run-all-tests)")),
+  s("argl", fmt("{{:arglists '([{}]) }}", { i(1) })),
   s(
     "write-edn",
     fmt([[(binding [*print-namespace-maps* false]

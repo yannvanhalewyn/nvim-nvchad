@@ -28,6 +28,32 @@ require("lazy").setup({
   { import = "plugins" },
 }, lazy_config)
 
+-- require("lazy").setup({
+--   {
+--     "NvChad/NvChad",
+--     lazy = false,
+--     branch = "v2.5",
+--     import = "nvchad.plugins",
+--     config = function()
+--       require "options"
+--     end,
+--   },
+--   {
+--     "Olical/conjure",
+--     ft = { "clojure" },
+--     config = function()
+--       -- vim.g["conjure#highlight#enabled"] = true
+--       vim.g.clojure_align_subforms = 1
+--       vim.g.clojure_fuzzy_indent_patterns = { "^with", "^def", "^let", "^assoc", "go-loop"}
+--     end
+--   },
+--
+--   {
+--     'ggandor/nvim-parinfer',
+--     lazy = false
+--   }
+-- }, lazy_config)
+
 -- load theme
 dofile(vim.g.base46_cache .. "defaults")
 dofile(vim.g.base46_cache .. "statusline")

@@ -61,6 +61,7 @@ M.align = {
     },
   },
   n = {
+    -- Example: gaaap
     ["gaa"] = {
       function()
         local a = require("align")
@@ -148,6 +149,7 @@ M.toggle = {
     ["<leader>ch"] = { ":vs<cr><cmd>NvCheatsheet<CR>", "Toggle NvCheatsheet" },
     ["<leader>tb"] = { function() require("gitsigns").toggle_current_line_blame() end, "Toggle LineBlame", },
     ["<leader>tc"] = { f.toggle_color_column, "Toggle Color Column" },
+    ["<leader>tC"] = { ":set cursorline!<CR>:set cursorcolumn!<CR>", "Toggle Cursor Highlight" },
     ["<leader>td"] = { f.toggle_diagnostics, "Toggle Diagnostics" },
     ["<leader>tD"] = { f.toggle_diagnostics_virtual_text, "Toggle Diagnostics Virtual Text" },
     ["<leader>te"] = { vim.diagnostic.open_float, "Toggle Error Message" },
@@ -163,6 +165,9 @@ M.code = {
   i = {
     ["<C-k>"] = { vim.lsp.buf.signature_help, "LSP: Signature Help" },
   },
+  v = {
+    ["<leader>cf"] = {":'<,'>!cljfmt fix --quiet -<CR>", "Clojure Format"}
+  },
   n = {
     ["[e"] = { vim.diagnostic.goto_prev, "Code Prev Error" },
     ["]e"] = { vim.diagnostic.goto_next, "Code Next Error" },
@@ -171,10 +176,13 @@ M.code = {
     ["[q"] = { "<CMD>cprev<CR>zz", "Quickfix Prev" },
     ["]q"] = { "<CMD>cnext<CR>zz", "Quickfix Next" },
     ["<C-k>"] = { vim.lsp.buf.signature_help, "Code Signature Help" },
-    ["<leader>cf"] = { function() vim.lsp.buf.format({ async = true }) end, "Code Format" },
+    ["<leader>cf"] = { ":w<CR>:silent exec \"!cljfmt fix <C-r>=expand('%:p')<CR>\"<CR>", "Clojure Format" },
+    -- ["<leader>cf"] = { ":%!cljfmt fix --quiet -<CR>", "Clojure Format" },
+    -- ["<leader>cf"] = { function() vim.lsp.buf.format({ async = true }) end, "Code Format" },
     ["<leader>cr"] = { telescope_cmd "lsp_references", "Code Telescope References" },
     ["<leader>cR"] = { function() require("nvchad.lsp.renamer")() end, "Code Rename", },
     ["<leader>ce"] = { vim.diagnostic.setqflist, "Code Project Diagnostics Quickfix" },
+    ["<leader>ca"] = { vim.lsp.buf.code_action, "Code LSP Code Actions" },
     ["<leader>/"] = {
       ":Telescope live_grep search_dirs={\"%:p\"} vimgrep_arguments=rg,--color=never,--no-heading,--with-filename,--line-number,--column,--smart-case,--fixed-strings<cr>",
       "Code Search File"
@@ -331,7 +339,8 @@ M.parpar = {
   n = {
     -- Fix J breaking multiline sexps
     -- https://github.com/gpanders/nvim-parinfer/issues/11
-    -- ["J"] = { "A<space><esc>" },
+    -- This sometimes deletes following lines causing a mess
+    -- ["J"] = { "A<space><esc>J" },
   },
 }
 

@@ -1,11 +1,105 @@
+local function lsp_indent(event, opts)
+  local traversal = require("nvim-paredit.utils.traversal")
+  local utils = require("nvim-paredit.indentation.utils")
+  local langs = require("nvim-paredit.lang")
+
+  local lang = langs.get_language_api()
+
+  local parent = event.parent
+
+  local child
+  if event.type == "slurp-forwards" then
+    child = parent:named_child(parent:named_child_count() - 1)
+  elseif event.type == "slurp-backwards" then
+    child = parent:named_child(1)
+  elseif event.type == "barf-forwards" then
+    child = traversal.get_next_sibling_ignoring_comments(event.parent, { lang = lang })
+  elseif event.type == "barf-backwards" then
+    child = event.parent
+  else
+    return
+  end
+
+  local child_range = { child:range() }
+  local lines = utils.find_affected_lines(child, utils.get_node_line_range(child_range))
+
+  print("LSP INDENT",  lines[1] + 1, lines[#lines])
+  vim.lsp.buf.format({
+    bufnr = opts.buf or 0,
+    range = {
+      ["start"] = { lines[1] + 1, 0 },
+      ["end"] = { lines[#lines] + 1, 0 },
+    },
+  })
+end
+
+local function setup_clojure_indentation()
+  vim.g.clojure_align_multiline_strings = 1
+  vim.g.clojure_align_subforms = 0
+  vim.g.clojure_fuzzy_indent = 1
+  vim.g.clojure_fuzzy_indent_patterns = { ".*" }
+  vim.g.clojure_fuzzy_indent_blacklist = {
+    "^or$", "^and$", "=", "^+$", "^-$", "^str$"
+  }
+
+  -- Define the custom indentation function
+  vim.cmd([[
+    function! GetClojureIndent()
+      let lnum = v:lnum
+      let prev_lnum = prevnonblank(lnum - 1)
+      let prev_line = getline(prev_lnum)
+
+      " Check if the previous line starts with a keyword
+      echo prev_line
+      if prev_line =~ '^\s*(:\w'
+        return indent(prev_lnum) + 1
+      endif
+
+      " Use default Lisp indentation for other cases
+      return lispindent(lnum)
+    endfunction
+  ]])
+
+  -- Set up an autocommand to apply the custom indentation function
+  -- vim.cmd([[
+  --   augroup ClojureIndent
+  --     autocmd!
+  --     autocmd FileType clojure setlocal indentexpr=GetClojureIndent()
+  --   augroup END
+  -- ]])
+
+
+  -- local autocmd = vim.api.nvim_create_autocmd
+  --
+  -- -- Cleanup whitespace on save
+  -- autocmd("FileType", {
+  --   pattern = "*",
+  --   callback = function()
+  --     local save_cursor = vim.fn.getpos(".")
+  --     -- pcall catches errors
+  --     pcall(function() vim.cmd [[%s/\s\+$//e]] end)
+  --     vim.fn.setpos(".", save_cursor)
+  --   end,
+  -- })
+
+end
+
+vim.api.nvim_create_user_command('CheckClojureIndent', function()
+  print(vim.inspect(vim.fn.GetClojureIndent()))
+end, {})
+
 return {
   {
     "Olical/conjure",
     ft = { "clojure" },
     config = function()
-      -- vim.g["conjure#highlight#enabled"] = true
-      vim.g.clojure_align_subforms = 1
-      vim.g.clojure_fuzzy_indent_patterns = { "^with", "^def", "^let", "^assoc"}
+      vim.g["conjure#highlight#enabled"] = true
+      setup_clojure_indentation()
+      -- vim.g.clojure_align_subforms = 0
+      -- vim.g.clojure_fuzzy_indent_patterns = { "^with", "^def", "^let", "^assoc$", "go-loop", "^or$", "^and$", "^=$"}
+      -- vim.g.clojure_fuzzy_indent_patterns = { "^.*(?!or)$" }
+      -- vim.g.clojure_fuzzy_indent_patterns = { ".*" }
+      -- vim.g.clojure_fuzzy_indent_blacklist = { "^or$", "^and$", "^=", "^+", "^-" }
     end
   },
   {
@@ -16,8 +110,12 @@ return {
       local parpar = require("parpar")
       parpar.setup({
         paredit = {
-          keys = require("mappings").paredit["n"]
-        }
+          keys = require("mappings").paredit["n"],
+          -- indent = {
+          --   enabled = true,
+          --   indentor = lsp_indent
+          -- }
+        },
       })
     end
   },

@@ -59,9 +59,41 @@ end
 M.refresh_chrome = function()
   -- Append '& active' to activate Chrome
   local script = 'tell application "Google Chrome" to (reload (active tab of (window 1)))'
+  -- local script = [[tell app "Google Chrome" to activate
+  -- tell app "System events" keystrok "r" using command down
+  -- end tell]]
   local cmd = string.format("osascript -e '%s' 2>&1", script)
+  print("running:", cmd)
   os.execute(cmd)
 end
+
+-- try function vim.fn.jobstart({ "open", url })
+-- from https://github.com/linrongbin16/gitlinker.nvim/blob/master/lua/gitlinker/actions.lua
+M.refresh_arc = function()
+  -- Append '& active' to activate Chrome
+  local script = 'tell application "Arc" to (reload (active tab of (window 1)))'
+  -- local script = [[tell app "Google Chrome" to activate
+  -- tell app "System events" keystrok "r" using command down
+  -- end tell]]
+  local cmd = string.format("osascript -e '%s' 2>&1", script)
+  print("running:", cmd)
+  os.execute(cmd)
+end
+
+-- M.refresh_arc = function()
+--     local cmd = "!osascript -e 'tell app \"Arc\" to activate
+--             \tell app \"System events\"\<cr> keystroke \"r\" using command down\<cr>
+--             \end tell'"
+--     silent exe "!osascript -e 'tell app \"Iterm2\" to activate end tell'"
+-- end
+--
+-- function! ReloadBrowser()
+--
+--     silent exe "!osascript -e 'tell app \"Google Chrome\" to activate\<cr>
+--             \tell app \"System events\"\<cr> keystroke \"r\" using command down\<cr>
+--             \end tell'"
+--     silent exe "!osascript -e 'tell app \"Iterm2\" to activate'"
+-- endfunction
 
 local function pause_parinfer()
   if vim.b.parinfer_enabled then
