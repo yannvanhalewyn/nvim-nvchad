@@ -43,33 +43,6 @@ M.ui = {
     enabled = false,
   },
 
-  hl_override = {
-    Comment = { italic = true },
-    ["@comment"] = { italic = true },
-    ["@symbol"] = { fg = "blue" },
-    ["@function"] = { fg = "yellow" },
-    ["@function.call"] = { fg = "yellow" },
-    DiffAdd = { fg = "NONE", bg = "#31352b" },
-    DiffDelete = { fg = "NONE", bg = "#511c21" },
-    -- Part of changed line that actually changed
-    DiffText = { fg = "NONE", bg = "#373b43", bold = true },
-  },
-
-  hl_add = {
-    ["@string.special.symbol"] = { fg = "blue" },
-
-    NeogitDiffAdd = { fg = "#7d9c53" },
-    NeogitDiffAddHighlight = { link = "DiffAdd" },
-    -- Neogit uses get_fg("Error"), which is dark in my theme not red.
-    NeogitDiffDelete = { fg = "#e06c75" },
-    NeogitDiffDeleteHighlight = { link = "DiffDelete" },
-    NeogitChangeModified = { fg = "yellow" },
-    NeogitChangeDeleted = { fg = "red" },
-
-    DiffviewDiffChange = { fg = "NONE", bg = "#2d3139" },
-    DiffviewDiffAddAsDelete = { link = "DiffDelete" },
-  },
-
   statusline = {
     theme = "default",
     order = { "mode", "file", "harpoon", "git", "%=", "lsp_msg", "diagnostics", "lsp", "cwd", "cursor" },
@@ -94,6 +67,39 @@ M.ui = {
       cursor = "%#St_pos_sep#" .. "" .. "%#St_pos_icon# %#St_pos_text# %l/%c ",
       harpoon = harpoon_segment,
     },
+  },
+}
+
+M.base46 = {
+  -- Use :Inspect to view highlight groups
+  hl_override = {
+    Comment = { italic = true },
+    ["@spell"] = { italic = true },
+    ["@comment"] = { italic = true },
+    ["@symbol"] = { fg = "blue" },
+    ["@function"] = { fg = "yellow" },
+    DiffAdd = { fg = "NONE", bg = "#31352b" },
+    DiffDelete = { fg = "NONE", bg = "#511c21" },
+    -- Part of changed line that actually changed
+    DiffText = { fg = "NONE", bg = "#373b43", bold = true },
+  },
+
+  hl_add = {
+    ["@function.call.clojure"] = { fg = "yellow" },
+    ["function.call.lua"] = { fg = "yellow" },
+    -- ["@function.call"] = { fg = "yellow" },
+    ["@string.special.symbol"] = { fg = "blue" },
+
+    NeogitDiffAdd = { fg = "#7d9c53" },
+    NeogitDiffAddHighlight = { link = "DiffAdd" },
+    -- Neogit uses get_fg("Error"), which is dark in my theme not red.
+    NeogitDiffDelete = { fg = "#e06c75" },
+    NeogitDiffDeleteHighlight = { link = "DiffDelete" },
+    NeogitChangeModified = { fg = "yellow" },
+    NeogitChangeDeleted = { fg = "red" },
+
+    DiffviewDiffChange = { fg = "NONE", bg = "#2d3139" },
+    DiffviewDiffAddAsDelete = { link = "DiffDelete" },
   },
 }
 
