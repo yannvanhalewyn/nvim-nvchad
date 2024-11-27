@@ -100,6 +100,12 @@ return {
       -- vim.g.clojure_fuzzy_indent_patterns = { "^.*(?!or)$" }
       -- vim.g.clojure_fuzzy_indent_patterns = { ".*" }
       -- vim.g.clojure_fuzzy_indent_blacklist = { "^or$", "^and$", "^=", "^+", "^-" }
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "clojure",
+        callback = function()
+          require("nvim-autopairs").remove_rule("'")
+        end,
+      })
     end
   },
   {
