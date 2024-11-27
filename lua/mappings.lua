@@ -238,10 +238,19 @@ M.git = {
   },
 }
 
-M.nvimtree = {
+-- M.nvimtree = {
+--   plugin = true,
+--   n = {
+--     { "<leader>n", ":NvimTreeToggle<cr>", mode = "n", desc = "Toggle NVTree"}
+--   }
+-- }
+
+M.neotree = {
   plugin = true,
   n = {
-    { "<leader>n", ":NvimTreeToggle<cr>", mode = "n", desc = "Toggle NVTree"}
+    { "<leader>n", ":Neotree reveal<cr>", mode = "n", desc = "Toggle Neotree"},
+    { "<leader>gn", ":Neotree git_status<cr>", mode = "n", desc = "Toggle Neotree Document Symbols"},
+    { "<leader>N", ":Neotree document_symbols right<cr>", mode = "n", desc = "Toggle Neotree Document Symbols"}
   }
 }
 

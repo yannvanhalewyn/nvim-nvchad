@@ -5,13 +5,13 @@ return {
   },
   {
     "nvim-tree/nvim-tree.lua",
-    enabled = true,
-    keys = require("mappings").nvimtree["n"],
-    opts = function()
-      local config = require "nvchad.configs.nvimtree"
-      config.renderer.highlight_git = false
-      return config
-    end
+    enabled = false,
+    -- keys = require("mappings").nvimtree["n"],
+    opts = {
+      git = {
+        enable = false,
+      }
+    },
   },
   {
     "lukas-reineke/indent-blankline.nvim",
