@@ -56,6 +56,19 @@ M.toggle_diagnostics_virtual_text = function()
   end
 end
 
+M.show_todos = function()
+  local width = 60
+
+  vim.cmd("vsplit " .. vim.fn.getcwd() .. "/todos.md")
+  vim.cmd("vertical resize " .. width)
+
+  vim.keymap.set("n", "q", ":quit<CR>", { buffer = true, silent = true })
+  vim.wo.number = false
+  vim.wo.relativenumber = false
+  vim.wo.wrap = true
+  vim.wo.linebreak = true
+end
+
 M.refresh_chrome = function()
   -- Append '& active' to activate Chrome
   local script = 'tell application "Google Chrome" to (reload (active tab of (window 1)))'

@@ -116,7 +116,8 @@ M.find = {
   n = {
     ["<leader> "] = { telescope_cmd "find_files", "Find Project Files" },
     ["<leader>fa"] = { "<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>", "Find All Files" },
-    ["<leader>fd"] = { telescope_cmd "diagnostics", "Find Diagnostics" },
+    ["<leader>fd"] = { ":Telescope diagnostics bufnr=0<CR>", "Find Buffer Diagnostics" },
+    ["<leader>fD"] = { ":Telescope diagnostics previewer=false sort_by=severity<CR>", "Find Project Diagnostics" },
     ["<leader>fg"] = { telescope_cmd "git_files", "Find Git Files" },
     ["<leader>fr"] = { telescope_cmd "oldfiles", "Find Recent Files" },
     ["<leader>fs"] = { vim.cmd.write, "File Save" },
@@ -141,6 +142,7 @@ M.help = {
 M.go = {
   n = {
     ["gs"] = { function() require("luasnip.loaders").edit_snippet_files() end, "Goto Snippet file", },
+    ["gt"] = { f.show_todos, "Go to Todos" },
   }
 }
 
@@ -176,6 +178,9 @@ M.code = {
     ["]c"] = { function() require("gitsigns").next_hunk() end, "Code Previous Unstanged Hunk" },
     ["[q"] = { "<CMD>cprev<CR>zz", "Quickfix Prev" },
     ["]q"] = { "<CMD>cnext<CR>zz", "Quickfix Next" },
+    ["<A-p>"] = { "<CMD>cprev<CR>zz", "Quickfix Prev" },
+    ["<A-n>"] = { "<CMD>cnext<CR>zz", "Quickfix Next" },
+
     ["<C-k>"] = { vim.lsp.buf.signature_help, "Code Signature Help" },
     ["<leader>cf"] = { ":w<CR>:silent exec \"!cljfmt fix <C-r>=expand('%:p')<CR>\"<CR>", "Clojure Format" },
     -- ["<leader>cf"] = { ":%!cljfmt fix --quiet -<CR>", "Clojure Format" },
@@ -229,8 +234,7 @@ M.git = {
     ["<leader>gp"] = { function() require("gitsigns").preview_hunk_inline() end, "Git Preview Hunk Inline" },
     ["<leader>gP"] = { function() require("gitsigns").preview_hunk() end, "Git Preview Hunk" },
     ["<leader>gB"] = { function() require("agitator").git_blame_toggle {} end, "Git Blame", },
-    -- Somehow this is set already
-    -- ["<leader>gb"] = { function() require("agitator").git_blame() end, "Browse File on Github", },
+    ["<leader>gb"] = { function() require("gitsigns").blame_line() end, "Browse File on Github", },
     ["<leader>gd"] = { ":DiffviewOpen<CR>", "Git Diff current index", },
     ["<leader>gD"] = { ":DiffviewOpen master..HEAD", "Git diff something else", },
     ["<leader>gf"] = { function() require("agitator").open_file_git_branch() end, "Git Find File", },
@@ -280,14 +284,14 @@ M.harpoon = {
     ["<leader>8"] = { f.harpoon_select(8), "Harpoon Browse File (8)" },
     ["<leader>9"] = { f.harpoon_select(9), "Harpoon Browse File (9)" },
     ["<leader>0"] = { f.harpoon_select(10), "Harpoon Browse File (10)" },
-    ["<A-p>"] = { function() require("harpoon"):list():prev() end, "Harpoon Next" },
-    ["<A-n>"] = { function() require("harpoon"):list():next() end, "Harpoon Prev" },
+    -- ["<A-p>"] = { function() require("harpoon"):list():prev() end, "Harpoon Next" },
+    -- ["<A-n>"] = { function() require("harpoon"):list():next() end, "Harpoon Prev" },
   }
 }
 
 M.todo_comments = {
   n = {
-    ["gt"] = { "<cmd>TodoQuickFix<CR>", "TODOS Quickfix" },
+    ["gT"] = { "<cmd>TodoQuickFix<CR>", "TODOS Quickfix" },
     ["<leader>ft"] = { "<cmd>TodoTelescope<CR>", "TODOS Telescope" },
   }
 }
