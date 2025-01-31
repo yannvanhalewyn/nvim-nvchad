@@ -5,6 +5,9 @@ vim.opt.timeoutlen = 500 -- Delay whichkey a bit
 vim.opt.inccommand = "split"
 vim.g.lua_snippets_path = vim.fn.stdpath("config") .. "/lua/snippets"
 
+-- Fix cursorline not showing with NVChad
+-- vim.o.cursorlineopt = "both"
+
 local autocmd = vim.api.nvim_create_autocmd
 
 -- Cleanup whitespace on save

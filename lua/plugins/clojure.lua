@@ -125,4 +125,61 @@ return {
       })
     end
   },
+  {
+    "julienvincent/clojure-test.nvim",
+    -- Trying to get UI to work but not working
+    dependencies = { "MunifTanjim/nui.nvim", "nvim-neotest/nvim-nio" },
+    ft = { "clojure" },
+    config = function()
+      require("clojure-test").setup(
+        -- list of default keybindings
+        {
+          keys = {
+            ui = {
+              expand_node = { "l", "<Right>" },
+              collapse_node = { "h", "<Left>" },
+              go_to = { "<Cr>", "gd" },
+
+              cycle_focus_forwards = "<Tab>",
+              cycle_focus_backwards = "<S-Tab>",
+
+              quit = { "q", "<Esc>" },
+            },
+          },
+
+          hooks = {
+            -- This is a hook that will be called with a table of tests that are about to be run. This
+            -- can be used as an opportunity to save files and/or reload clojure namespaces.
+            --
+            -- This combines really well with https://github.com/tonsky/clj-reload
+            before_run = function(tests)
+              -- Save all modified buffers
+              vim.api.nvim_command("wa")
+
+              local client = require("conjure.client")
+              local fn = require("conjure.eval")["eval-str"]
+              print("RERESHING ALL NSES")
+              print(fn)
+              client["with-filetype"]("clojure", fn, {
+                origin = "clojure_test.hooks.before_run",
+                context = "user",
+                code = [[ ((requiring-resolve 'clojure.tools.namespace.repl/refresh)) ]],
+              })
+            end
+          }
+        }
+      )
+      local api = require("clojure-test.api")
+      -- 'ta' is overwritten by Conjure. I don't think it's possible to only disable one of them
+      -- (see clojure/nrepl/init.fnl in Conjure) but we can disable all of them using
+      -- vim.g["conjure#mapping#enable_defaults"] = false
+      -- And rebinding the defaults that I did use.
+      vim.keymap.set("n", "<localleader>tA", api.run_all_tests, { desc = "Run all tests" })
+      vim.keymap.set("n", "<localleader>tt", api.run_tests, { desc = "Run tests" })
+      vim.keymap.set("n", "<localleader>tf", api.run_tests_in_ns, { desc = "Run tests in file" })
+      vim.keymap.set("n", "<localleader>tl", api.rerun_previous, { desc = "Rerun the most recently run tests" })
+      vim.keymap.set("n", "<localleader>tL", api.load_tests, { desc = "Find and load test namespaces in classpath" })
+      vim.keymap.set("n", "<localleader>!", function() api.analyze_exception("*e") end, { desc = "Inspect the most recent exception" })
+    end
+  }
 }

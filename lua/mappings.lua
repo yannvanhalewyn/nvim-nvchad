@@ -340,12 +340,18 @@ M.neoscroll = {
   },
 }
 
+local function clerk_show()
+  vim.cmd("write")
+  vim.cmd("ConjureEval (nextjournal.clerk/show! \"" .. vim.fn.expand("%:p") .. "\")")
+end
+
 M.conjure = {
   n = {
-    ["<localleader>tt"] = { "<cmd>ConjureCljRunCurrentTest<CR>", "Clojure Run Test at Point" },
+    -- ["<localleader>tt"] = { "<cmd>ConjureCljRunCurrentTest<CR>", "Clojure Run Test at Point" },
     ["<localleader>ct"] = { "m'O<esc>80i;<esc>`'", "Clojure Comment Title" },
     ["<localleader>cr"] = { "<cmd>ConjureCljRefreshChanged<CR>", "Clojure Refresh Changed" },
-    ["<localleader>cR"] = { "<cmd>ConjureCljRefreshAll<CR>", "Clojure Refresh All" }
+    ["<localleader>cR"] = { "<cmd>ConjureCljRefreshAll<CR>", "Clojure Refresh All" },
+    ["<localleader>cs"] = { clerk_show, "Clojure Clerk Show" },
   }
 }
 
