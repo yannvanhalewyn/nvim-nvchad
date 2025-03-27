@@ -36,16 +36,40 @@ local function harpoon_segment(number_opts)
   end
 end
 
+local function abbreviate_path(path)
+  local terms = {
+    "src",
+    "com",
+    "arqiver"
+  }
+
+  local segments = {}
+  for segment in path:gmatch("[^/]+") do
+    table.insert(segments, segment)
+  end
+
+  for i, segment in ipairs(segments) do
+    for _, term in ipairs(terms) do
+      if segment == term then
+        -- segments[i] = "%#Comment#" .. term:sub(1,1) .. "%#StatusLine#"
+        segments[i] = term:sub(1,1)
+        break
+      end
+    end
+  end
+
+  return table.concat(segments, "/")
+end
+
 M.ui = {
-  theme = "onedark",
-  theme_toggle = { "onedark", "everforest_light"},
   tabufline = {
     enabled = false,
   },
 
   statusline = {
     theme = "default",
-    order = { "mode", "file", "harpoon", "git", "%=", "lsp_msg", "diagnostics", "lsp", "cwd", "cursor" },
+    -- order = { "mode", "file", "harpoon", "git", "%=", "lsp_msg", "diagnostics", "lsp", "cwd", "cursor" },
+    order = { "mode", "file", "harpoon", "%=", "lsp_msg", "diagnostics", "cwd", "cursor" },
     modules = {
       file = function()
         local icon = "󰈚"
@@ -62,7 +86,7 @@ M.ui = {
         end
 
         local relative_path = vim.fn.expand("%:~:.")
-        return "%#St_file# " .. icon .. " " .. relative_path .. " " .. "%#St_file_sep#" .. ""
+        return "%#St_file# " .. icon .. " " .. abbreviate_path(relative_path) .. " " .. "%#St_file_sep#" .. ""
       end,
       cursor = "%#St_pos_sep#" .. "" .. "%#St_pos_icon# %#St_pos_text# %l/%c ",
       harpoon = harpoon_segment,
@@ -70,7 +94,14 @@ M.ui = {
   },
 }
 
+
+-- Snippet to load colors from current theme
+-- local colors = dofile(vim.g.base46_cache .. "colors")
+-- print(colors.black2)
+
 M.base46 = {
+  theme = "onedark",
+  theme_toggle = { "onedark", "everforest_light"},
   -- Use :Inspect to view highlight groups
   hl_override = {
     Comment = { italic = true },
@@ -101,9 +132,13 @@ M.base46 = {
     -- Shows 'deleted' in red in git status
     NeogitChangeDeleted = { fg = "red" },
     --
-    -- DiffviewDiffChange = { fg = "NONE", bg = "#2d3139" },
+    -- DiffviewDiffChange = { bg = "#2d3139" },
     -- DiffviewDiffAddAsDelete = { link = "DiffDelete" },
   },
+}
+
+M.colorify = {
+  enabled = false,
 }
 
 return M
