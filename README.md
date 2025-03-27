@@ -45,15 +45,11 @@ https://github.com/iamcco/markdown-preview.nvim
 
 # New bindings
 
-| Binding   | Command        |
-|-----------|----------------|
-| gt        | Todo Quickfix  |
-| gT        | Todo Trouble   |
-| Leader ft | Todo Telescope |
-| Leader ft | Todo Telescope |
-| Leader tt | Toggle Trouble |
-| Leader td | Trouble Diagnostics (Doc) |
-| Leader tD | Trouble Diagnostics (Project) |
-| Leader tq | Trouble Quickfix |
-| Leader tl | Trouble LocList |
-| Leader tr | Trouble References |
+ | Binding    | Command                       |
+ |------------|-------------------------------|
+ | gt         | Todo Quickfix                 |
+ | gT         | Todo Trouble                  |
+ | Leader ft  | Todo Telescope                |
+ | Leader ft  | Todo Telescope                |
+ | Ctrl-w + T | Move window to new tab        |
+ | cgn        | Change next search result     |

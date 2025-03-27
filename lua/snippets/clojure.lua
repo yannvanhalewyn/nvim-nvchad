@@ -6,6 +6,7 @@ return {
   s("cl", fmt("(js/console.log {})", { i(1) })),
   s("ds", fmt("(sc.api/defsc {})", { i(1, "spypoint") })),
   s("log", fmt("(clojure.tools.logging/debug {})", { i(1) })),
+  s("diff", t("(clojure.data/diff {})")),
   s("ls", fmt("(sc.api/letsc {})", { i(1, "spypoint") })),
   s("me", fmt("(malli.dev.pretty/explain {})", { i(1) })),
   s("bd", t("(dev.tools.breakpoint-display/breakpoint-display)")),

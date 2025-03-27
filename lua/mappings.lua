@@ -164,6 +164,13 @@ M.toggle = {
   }
 }
 
+M.kulala = {
+  n = {
+    ["<leader>kk"] = { function() require("kulala").run() end, "Kulala Run" },
+    ["<leader>ke"] = { function() require("kulala").set_selected_env() end, "Kulala Run" },
+  }
+}
+
 M.code = {
   i = {
     ["<C-k>"] = { vim.lsp.buf.signature_help, "LSP: Signature Help" },
@@ -234,7 +241,7 @@ M.git = {
     ["<leader>gp"] = { function() require("gitsigns").preview_hunk_inline() end, "Git Preview Hunk Inline" },
     ["<leader>gP"] = { function() require("gitsigns").preview_hunk() end, "Git Preview Hunk" },
     ["<leader>gB"] = { function() require("agitator").git_blame_toggle {} end, "Git Blame", },
-    ["<leader>gb"] = { function() require("gitsigns").blame_line() end, "Browse File on Github", },
+    ["<leader>gb"] = { function() require("gitsigns").blame_line() end, "Git blame line", },
     ["<leader>gd"] = { ":DiffviewOpen<CR>", "Git Diff current index", },
     ["<leader>gD"] = { ":DiffviewOpen master..HEAD", "Git diff something else", },
     ["<leader>gf"] = { function() require("agitator").open_file_git_branch() end, "Git Find File", },

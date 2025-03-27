@@ -1,7 +1,8 @@
 return {
   {
     "ixru/nvim-markdown",
-    ft = "markdown"
+    ft = "markdown",
+    dependencies = { "godlygeek/tabular" } -- For formatting tables
   },
   {
     "iamcco/markdown-preview.nvim",
