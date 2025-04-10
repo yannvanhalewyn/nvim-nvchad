@@ -33,7 +33,10 @@ return {
         lspconfig[lsp].setup({
           on_init = nvchad_lspconfig.on_init,
           on_attach = nvchad_lspconfig.on_attach,
-          capabilities = nvchad_lspconfig.capabilities,
+          -- capabilities = nvchad_lspconfig.capabilities,
+          -- Not sure if this is necessary, it's in the blink docs but works with the nvchad one as well.
+          -- capabilities = require('blink.cmp').get_lsp_capabilities(vim.lsp.protocol.make_client_capabilities()),
+          capabilities = require('blink.cmp').get_lsp_capabilities(nil),
         })
       end
 
