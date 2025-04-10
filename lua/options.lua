@@ -27,7 +27,8 @@ autocmd("BufWritePre", {
 -- })
 --
 -- Save buffer on insert leave
--- vim.api.nvim_create_autocmd({ "InsertLeave", "TextChanged" }, {
+-- Disabled because this breaks <c-q> in telescope
+-- vim.api.nvim_create_autocmd({ "InsertLeave" }, {
 --   callback = function()
 --     if vim.api.nvim_buf_get_name(0) ~= 0 and vim.bo.buflisted then
 --       vim.cmd "silent w"
