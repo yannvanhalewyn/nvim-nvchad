@@ -20,6 +20,18 @@ return {
   s("unmap", fmt("(ns-unmap *ns* '{})", { i(1, "symbol") })),
   s("wor", t("(set! *warn-on-reflection* true)")),
   s(
+    "xtq",
+    fmt([[(db/q (user/{}-db )
+  '{{:find (pull ?e [*]
+    :where [[?e {}])}})
+]],
+      {
+        i(1),
+        i(2, ":xt/id"),
+      }
+    )
+  ),
+  s(
     "write-edn",
     fmt([[(binding [*print-namespace-maps* false]
   (clojure.pprint/pprint {} (clojure.java.io/writer "{}")))
