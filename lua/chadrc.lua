@@ -62,10 +62,6 @@ local function abbreviate_path(path)
 end
 
 M.ui = {
-  tabufline = {
-    enabled = false,
-  },
-
   statusline = {
     theme = "default",
     -- order = { "mode", "file", "harpoon", "git", "%=", "lsp_msg", "diagnostics", "lsp", "cwd", "cursor" },
@@ -131,6 +127,8 @@ M.base46 = {
     NeogitChangeModified = { fg = "yellow" },
     -- Shows 'deleted' in red in git status
     NeogitChangeDeleted = { fg = "red" },
+    BlinkCmpMenuBorder = { fg = "grey" },
+    BlinkCmpDocBorder = { fg = "grey" },
     --
     -- DiffviewDiffChange = { bg = "#2d3139" },
     -- DiffviewDiffAddAsDelete = { link = "DiffDelete" },
