@@ -20,13 +20,15 @@ local function tab_complete()
   end, { "i", "s" })
 end
 
+-- Obsidian completion creates problem with [{:}]
 return {
   {
     "hrsh7th/nvim-cmp",
-    enabled = false,
+    enabled = true,
     opts = function()
       local config = copy(require "nvchad.configs.cmp")
       -- table.insert(config.sources, { name = "supermaven" })
+      table.insert(config.sources, { name = "obsidian" })
       config.mapping["<CR>"] = nil
       config.mapping["<Tab>"] = tab_complete()
       return config
@@ -35,23 +37,44 @@ return {
 
   {
     "saghen/blink.cmp",
+    enabled = false,
     version = "1.*",
     event = "InsertEnter",
     dependencies = {
-      "L3MON4D3/LuaSnip",
-      dependencies = { "rafamadriz/friendly-snippets" },
-      version = "v2.*",
-      config = function ()
-        -- Loads json snippets like the markdown ones
-        require("luasnip.loaders.from_vscode").lazy_load()
-        require("luasnip.loaders.from_lua").lazy_load({
-          paths = vim.g.lua_snippets_path or ""
-        })
-      end
+      {
+        "L3MON4D3/LuaSnip",
+        dependencies = { "rafamadriz/friendly-snippets" },
+        version = "v2.*",
+        config = function ()
+          -- Loads json snippets like the markdown ones
+          require("luasnip.loaders.from_vscode").lazy_load()
+          require("luasnip.loaders.from_lua").lazy_load({
+            paths = vim.g.lua_snippets_path or ""
+          })
+        end
+      },
+      "saghen/blink.compat" --for obsidian.nvim hack
     },
     opts = {
       sources = {
-        default = { "lsp", "path", "snippets", "buffer" },
+        default = {
+           "lsp", "path", "snippets", "obsidian", "obsidian_new", "obsidian_tags", "buffer"
+        },
+        providers = {
+          obsidian = {
+            name = "obsidian",
+            module = "blink.compat.source",
+          },
+          obsidian_new = {
+            name = "obsidian_new",
+            module = "blink.compat.source",
+          },
+          obsidian_tags = {
+            name = "obsidian_tags",
+            module = "blink.compat.source",
+          },
+
+        }
       },
 
       -- 'default' (recommended) for mappings similar to built-in completions (C-y to accept)

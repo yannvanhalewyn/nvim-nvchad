@@ -14,6 +14,7 @@ return {
   s("pp", fmt("(clojure.pprint/pprint {})", { i(1) })),
   s("req", fmt("(require '[{} :as {}])", { i(1, "example.ns"), i(2, "alias")})),
   s("rs", t("(require 'sc.api)")),
+  s("hpp", t("(require 'hashp.preload)")),
   s("spy", fmt("(sc.api/spy {})", { i(1) })),
   s("test", t("(clojure.test/run-all-tests)")),
   s("unalias", fmt("(ns-unalias *ns* '{})", { i(1, "alias") })),

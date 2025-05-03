@@ -160,14 +160,8 @@ M.toggle = {
     ["<leader>tp"] = { f.toggle_parinfer, "Toggle Parinfer" },
     ["<leader>tq"] = { f.toggle_quickfix_window, "Toggle Quickfix Window" },
     ["<leader>tr"] = { "<cmd>set rnu!<CR>", "Toggle Relative number" },
+    ["<leader>ts"] = { "<cmd>SupermavenToggle<CR>", "Toggle Relative number" },
     ["<leader>tt"] = { function() require("base46").toggle_theme() end, "Toggle Theme" },
-  }
-}
-
-M.kulala = {
-  n = {
-    ["<leader>kk"] = { function() require("kulala").run() end, "Kulala Run" },
-    ["<leader>ke"] = { function() require("kulala").set_selected_env() end, "Kulala Run" },
   }
 }
 
@@ -179,6 +173,7 @@ M.code = {
     ["<leader>cf"] = {":'<,'>!cljfmt fix --quiet -<CR>", "Clojure Format"}
   },
   n = {
+    ["K"] = { vim.lsp.buf.signature_help, "LSP: Signature Help" },
     ["[e"] = { vim.diagnostic.goto_prev, "Code Prev Error" },
     ["]e"] = { vim.diagnostic.goto_next, "Code Next Error" },
     ["[c"] = { function() require("gitsigns").prev_hunk() end, "Code Next Unstanged Hunk" },
@@ -187,6 +182,8 @@ M.code = {
     ["]q"] = { "<CMD>cnext<CR>zz", "Quickfix Next" },
     ["<A-p>"] = { "<CMD>cprev<CR>zz", "Quickfix Prev" },
     ["<A-n>"] = { "<CMD>cnext<CR>zz", "Quickfix Next" },
+    ["<A-f>"] = { "za", "Toggle Fold" },
+    ["<A-F>"] = { f.toggle_all_folds, "Toggle All Fold" },
 
     ["<C-k>"] = { vim.lsp.buf.signature_help, "Code Signature Help" },
     ["<leader>cf"] = { ":w<CR>:silent exec \"!cljfmt fix <C-r>=expand('%:p')<CR>\"<CR>", "Clojure Format" },
@@ -398,6 +395,26 @@ M.term = {
   }
 }
 
+M.kulala = {
+  n = {
+    ["<leader>kk"] = { function() require("kulala").run() end, "Kulala Run" },
+    ["<leader>ke"] = { function() require("kulala").set_selected_env() end, "Kulala Select Env" },
+  }
+}
+
+M.avante = {
+  n = {
+    ["<leader>ax"] = { "<cmd>AvanteClear<cr>", "Avante Clear" },
+    ["<leader>aa"] = { "<cmd>AvanteToggle<cr>", "Avante Toggle" },
+  }
+}
+
+-- M.disable = {
+--   n = {
+--     ["gi"] = { "noop", "" }
+--   }
+-- }
+--
 -- Setup enabled keymaps
 for _, config in pairs(M) do
   if not config.plugin then
@@ -408,6 +425,16 @@ for _, config in pairs(M) do
     end
   end
 end
+
+-- vim.keymap.del("n","gi")
+-- vim.api.nvim_create_autocmd('LspAttach', {
+--   callback = function(ev)
+--     vim.bo[ev.buf].formatexpr = nil
+--     vim.bo[ev.buf].omnifunc = nil
+--     vim.keymap.del('n', 'gi', { buffer = ev.buf })
+--   end,
+-- })
+-- vim.cmd('unmap gi')
 
 return M
 

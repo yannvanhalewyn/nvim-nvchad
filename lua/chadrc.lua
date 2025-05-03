@@ -1,7 +1,7 @@
 local M = {}
 
-vim.cmd("highlight TabLineFill guifg=#2d3139 guibg=black")
-vim.cmd("highlight TabLine guifg=#6f737b guibg=#2d3139")
+-- vim.cmd("highlight TabLineFill guifg=#2d3139 guibg=black")
+-- vim.cmd("highlight TabLine guifg=#6f737b guibg=#2d3139")
 
 local function harpoon_segment(number_opts)
   local harpoon = require("harpoon")
@@ -62,6 +62,10 @@ local function abbreviate_path(path)
 end
 
 M.ui = {
+  tabufline = {
+    enabled = false,
+  },
+
   statusline = {
     theme = "default",
     -- order = { "mode", "file", "harpoon", "git", "%=", "lsp_msg", "diagnostics", "lsp", "cwd", "cursor" },
@@ -96,8 +100,11 @@ M.ui = {
 -- print(colors.black2)
 
 M.base46 = {
-  theme = "onedark",
-  theme_toggle = { "onedark", "everforest_light"},
+  -- Themes I like:
+  -- onedark, catpuccin, tokyodark, everblush, jellybeans, rxyhn, yoru
+  -- eveblush
+  theme = "catppuccin",
+  theme_toggle = { "catppuccin", "everforest_light"},
   -- Use :Inspect to view highlight groups
   hl_override = {
     Comment = { italic = true },
@@ -108,8 +115,9 @@ M.base46 = {
     -- Used heavily by vim diff
     DiffAdd = { fg = "NONE", bg = "#31352b" },
     DiffDelete = { fg = "NONE", bg = "#511c21" },
+    Pmenu = { bg = "NONE" },
     -- Part of changed line that actually changed
-    -- DiffText = { fg = "NONE", bg = "#373b43", bold = true },
+    DiffText = { fg = "NONE", bg = "#373b43", bold = true },
   },
 
   hl_add = {
@@ -130,8 +138,8 @@ M.base46 = {
     BlinkCmpMenuBorder = { fg = "grey" },
     BlinkCmpDocBorder = { fg = "grey" },
     --
-    -- DiffviewDiffChange = { bg = "#2d3139" },
-    -- DiffviewDiffAddAsDelete = { link = "DiffDelete" },
+    DiffviewDiffChange = { bg = "#2d3139" },
+    DiffviewDiffAddAsDelete = { link = "DiffDelete" },
   },
 }
 

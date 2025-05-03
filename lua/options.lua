@@ -55,6 +55,23 @@ autocmd("BufReadPost", {
   -- end
 })
 
+vim.opt.foldmethod = "indent"
+vim.opt.foldnestmax = 1
+vim.opt.foldlevel = 1
+-- autocmd("FileType", {
+--   pattern = {"clojure", "lua"},
+--   callback = function()
+--     print("CALLED BACK")
+--   end,
+-- })
+
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = "*.http",
+  callback = function()
+    vim.bo.filetype = "sh"
+  end,
+})
+
 -- Setup HtmlToHiccup
 -- vim.cmd("command! HtmlToHiccup '<,'>!xargs -0 hiccup-cli --html")
 vim.api.nvim_create_user_command("HtmlToHiccup", "'<,'>!xargs -0 hiccup-cli --html", {range=true})
@@ -80,3 +97,7 @@ if vim.g.neovide then
   vim.api.nvim_set_keymap('v', '<D-v>', '<C-R>+', { noremap = true, silent = true})
 end
 
+vim.cmd("abbreviate organisation organization")
+vim.cmd("abbreviate Organisation Organization")
+
+vim.g.yvh_obsidian_root_dir = "/Users/yannvanhalewyn/Library/Mobile Documents/iCloud~md~obsidian/Documents/"

@@ -42,7 +42,18 @@ return {
     end
   },
   {
+    "windwp/nvim-autopairs",
+    lazy = false,
+    opts = {
+      fast_wrap = {},
+    },
+    config = function(_, opts)
+      require("nvim-autopairs").setup(opts)
+    end,
+  },
+  {
     "nvim-telescope/telescope-ui-select.nvim",
+    lazy = false,
   },
   {
     "theprimeagen/harpoon",

@@ -56,10 +56,21 @@ M.toggle_diagnostics_virtual_text = function()
   end
 end
 
+M.toggle_all_folds = function()
+  if vim.b.folds_open or vim.b.folds_open == null then
+    vim.b.folds_open = false
+    vim.api.nvim_feedkeys("zM", "n", false)
+  else
+    vim.b.folds_open = true
+    vim.api.nvim_feedkeys("zR", "n", false)
+  end
+end
+
 M.show_todos = function()
   local width = 60
 
-  vim.cmd("vsplit " .. vim.fn.getcwd() .. "/todos.md")
+  -- vim.cmd("vsplit " .. vim.fn.getcwd() .. "/todos.md")
+  vim.cmd("vsplit " .. vim.g.yvh_obsidian_root_dir .. "ArQiver/todos.md")
   vim.cmd("vertical resize " .. width)
 
   vim.keymap.set("n", "q", ":quit<CR>", { buffer = true, silent = true })

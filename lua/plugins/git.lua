@@ -54,4 +54,19 @@ return {
   {
     "emmanueltouzery/agitator.nvim",
   },
+  -- {
+  --   'tanvirtin/vgit.nvim', branch = 'v1.0.x',
+  --   dependencies = { 'nvim-lua/plenary.nvim', 'nvim-tree/nvim-web-devicons' },
+  --   -- Copied from README, supposed to be necessary
+  --   event = 'VimEnter',
+  --   config = function()
+  --     require("vgit").setup({
+  --       settings = {
+  --         live_blame = {
+  --           enabled = false
+  --         }
+  --       }
+  --     })
+  --   end,
+  -- }
 }

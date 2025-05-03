@@ -147,31 +147,26 @@ return {
             },
           },
 
-          hooks = {
-            -- This is a hook that will be called with a table of tests that are about to be run. This
-            -- can be used as an opportunity to save files and/or reload clojure namespaces.
-            --
-            -- This combines really well with https://github.com/tonsky/clj-reload
-            before_run = function(tests)
-              -- Save all modified buffers
-              vim.api.nvim_command("wa")
-
-              local client = require("conjure.client")
-              local fn = require("conjure.eval")["eval-str"]
-              print("RERESHING ALL NSES")
-              print(fn)
-              client["with-filetype"]("clojure", fn, {
-                origin = "clojure_test.hooks.before_run",
-                context = "user",
-                code = [[ ((requiring-resolve 'clojure.tools.namespace.repl/refresh)) ]],
-              })
-            end
-          }
+          -- hooks = {
+          --   before_run = function(tests)
+          --     -- Save all modified buffers
+          --     vim.api.nvim_command("wa")
+          --
+          --     local client = require("conjure.client")
+          --     local fn = require("conjure.eval")["eval-str"]
+          --     client["with-filetype"]("clojure", fn, {
+          --       origin = "clojure_test.hooks.before_run",
+          --       context = "user",
+          --       code = [[ ((requiring-resolve 'clojure.tools.namespace.repl/refresh)) ]],
+          --     })
+          --   end
+          -- }
         }
       )
       local api = require("clojure-test.api")
-      -- 'ta' is overwritten by Conjure. I don't think it's possible to only disable one of them
-      -- (see clojure/nrepl/init.fnl in Conjure) but we can disable all of them using
+      -- 'ta' is overwritten by Conjure. I don't think it's possible to only
+      -- disable one of them (see clojure/nrepl/init.fnl in Conjure) but we can
+      -- disable all of them using
       -- vim.g["conjure#mapping#enable_defaults"] = false
       -- And rebinding the defaults that I did use.
       vim.keymap.set("n", "<localleader>tA", api.run_all_tests, { desc = "Run all tests" })
