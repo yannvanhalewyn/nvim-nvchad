@@ -174,12 +174,28 @@ M.code = {
   },
   n = {
     ["K"] = { vim.lsp.buf.signature_help, "LSP: Signature Help" },
-    ["[e"] = { vim.diagnostic.goto_prev, "Code Prev Error" },
-    ["]e"] = { vim.diagnostic.goto_next, "Code Next Error" },
+    ["[e"] = {
+      function()
+        vim.diagnostic.jump({count = -1, float = true})
+      end,
+      -- f.recenter_if_scrolled(function()
+      --   vim.diagnostic.jump({count = -1, float = true})
+      -- end),
+      "Code Prev Error"
+    },
+    ["]e"] = {
+      function()
+        vim.diagnostic.jump({count = 1, float = true})
+      end,
+      -- f.recenter_if_scrolled(function()
+      --   vim.diagnostic.jump({count = 1, float = true})
+      -- end),
+      "Code Next Error"
+    },
     ["[c"] = { function() require("gitsigns").prev_hunk() end, "Code Next Unstanged Hunk" },
     ["]c"] = { function() require("gitsigns").next_hunk() end, "Code Previous Unstanged Hunk" },
-    ["[q"] = { "<CMD>cprev<CR>zz", "Quickfix Prev" },
-    ["]q"] = { "<CMD>cnext<CR>zz", "Quickfix Next" },
+    ["[q"] = { f.recenter_if_scrolled("cprev"), "Quickfix Prev" },
+    ["]q"] = { f.recenter_if_scrolled("cnext"), "Quickfix Next" },
     ["<A-p>"] = { "<CMD>cprev<CR>zz", "Quickfix Prev" },
     ["<A-n>"] = { "<CMD>cnext<CR>zz", "Quickfix Next" },
     ["<A-f>"] = { "za", "Toggle Fold" },
@@ -240,7 +256,7 @@ M.git = {
     ["<leader>gB"] = { function() require("agitator").git_blame_toggle {} end, "Git Blame", },
     ["<leader>gb"] = { function() require("gitsigns").blame_line() end, "Git blame line", },
     ["<leader>gd"] = { ":DiffviewOpen<CR>", "Git Diff current index", },
-    ["<leader>gD"] = { ":DiffviewOpen master..HEAD", "Git diff something else", },
+    ["<leader>gD"] = { ":DiffviewOpen master...HEAD", "Git diff something else", },
     ["<leader>gf"] = { function() require("agitator").open_file_git_branch() end, "Git Find File", },
     ["<leader>gt"] = { function() require("agitator").git_time_machine() end, "Git Timemachine", }
   },
@@ -303,17 +319,15 @@ M.todo_comments = {
 M.illuminate = {
   n = {
     ["[r"] = {
-      function()
+      f.recenter_if_scrolled(function()
         require("illuminate").goto_prev_reference()
-        -- vim.api.nvim_feedkeys("zz", "n", false)
-      end,
+      end),
       "Code Next Reference"
     },
     ["]r"] = {
-      function()
+      f.recenter_if_scrolled(function()
         require("illuminate").goto_next_reference()
-        -- vim.api.nvim_feedkeys("zz", "n", false)
-      end,
+      end),
       "Code Prev Reference"
     }
   }

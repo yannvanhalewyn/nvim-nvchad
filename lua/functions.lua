@@ -67,7 +67,7 @@ M.toggle_all_folds = function()
 end
 
 M.show_todos = function()
-  local width = 60
+  local width = 80
 
   -- vim.cmd("vsplit " .. vim.fn.getcwd() .. "/todos.md")
   vim.cmd("vsplit " .. vim.g.yvh_obsidian_root_dir .. "ArQiver/todos.md")
@@ -178,6 +178,28 @@ end
 M.harpoon_select = function(n)
   return function()
     require("harpoon"):list():select(n)
+  end
+end
+
+M.recenter_if_scrolled = function(cmd)
+  return function()
+    local win = vim.api.nvim_get_current_win()
+    local top_line = vim.fn.line('w0')
+    local bottom_line = vim.fn.line('w$')
+
+    -- Execute the command
+    if type(cmd) == "function" then
+      cmd()
+    else
+      vim.api.nvim_command(cmd)
+    end
+
+    local new_line = vim.api.nvim_win_get_cursor(win)[1]
+
+    -- If new_line is outside of original scope, recenter
+    if new_line <= top_line or new_line >= bottom_line then
+      vim.api.nvim_command('normal! zz')
+    end
   end
 end
 
