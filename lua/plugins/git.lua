@@ -43,6 +43,13 @@ return {
     end
   },
   {
+    "julienvincent/hunk.nvim",
+    cmd = { "DiffEditor" },
+    config = function()
+      require("hunk").setup()
+    end,
+  },
+  {
     "NeogitOrg/neogit",
     dependencies = {
       "nvim-lua/plenary.nvim",
