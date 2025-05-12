@@ -93,6 +93,7 @@ return {
     "Olical/conjure",
     ft = { "clojure" },
     config = function()
+      vim.g["conjure#mapping#doc_word"] = false
       vim.g["conjure#highlight#enabled"] = true
       setup_clojure_indentation()
       -- vim.g.clojure_align_subforms = 0

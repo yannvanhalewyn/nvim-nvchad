@@ -43,6 +43,16 @@ return {
       vim.diagnostic.config({
         virtual_text = false,
       })
+
+      -- Nicer style for floating lsp windows like for lsp.buf.hover()
+      local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+      ---@diagnostic disable-next-line: duplicate-set-field
+      function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+        opts = opts or {}
+        opts.border = "rounded" -- Or any other border
+        opts.width = 80
+        return orig_util_open_floating_preview(contents, syntax, opts, ...)
+      end
     end,
   },
   {

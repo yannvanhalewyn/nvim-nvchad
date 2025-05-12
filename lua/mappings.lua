@@ -173,7 +173,6 @@ M.code = {
     ["<leader>cf"] = {":'<,'>!cljfmt fix --quiet -<CR>", "Clojure Format"}
   },
   n = {
-    ["K"] = { vim.lsp.buf.signature_help, "LSP: Signature Help" },
     ["[e"] = {
       function()
         vim.diagnostic.jump({count = -1, float = true})
