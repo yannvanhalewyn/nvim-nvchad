@@ -24,7 +24,7 @@ return {
     opts = {
       disable_frontmatter = true,
       completion = {
-        nvim_cmp = true,  -- disable for using blink
+        -- nvim_cmp = true,  -- disable for using blink
       },
       workspaces = {
         {

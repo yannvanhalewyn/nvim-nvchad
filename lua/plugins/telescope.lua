@@ -7,13 +7,13 @@ return {
         preview = false
       }
     },
-    -- config = function()
-    --   local opts = require("nvchad.configs.telescope")
-    --   opts.defaults.preview = false
-    --   opts.extensions_list = { "themes", "terms", "ui-select" }
-    --   require("telescope").setup(opts)
-    --   require("telescope").load_extension("ui-select")
-    -- end,
+    config = function()
+      local opts = require("nvchad.configs.telescope")
+      -- opts.defaults.preview = false
+      -- opts.extensions_list = { "themes", "terms", "ui-select" }
+      require("telescope").setup(opts)
+      require("telescope").load_extension("ui-select")
+    end,
     dependencies = { "BurntSushi/ripgrep" }
   }
 }

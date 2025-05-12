@@ -3,6 +3,7 @@ require "nvchad.options"
 vim.opt.relativenumber = true
 vim.opt.timeoutlen = 500 -- Delay whichkey a bit
 vim.opt.inccommand = "split"
+vim.wo.wrap = false
 vim.g.lua_snippets_path = vim.fn.stdpath("config") .. "/lua/snippets"
 
 -- Fix cursorline not showing with NVChad
@@ -101,3 +102,25 @@ vim.cmd("abbreviate organisation organization")
 vim.cmd("abbreviate Organisation Organization")
 
 vim.g.yvh_obsidian_root_dir = "/Users/yannvanhalewyn/Library/Mobile Documents/iCloud~md~obsidian/Documents/"
+
+
+-- In your init.lua file
+
+-- Create an autocommand group for text file settings
+-- local text_files = vim.api.nvim_create_augroup("text_file_settings", { clear = true })
+
+-- Apply settings only to markdown and text files
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "markdown", "text" },
+  -- group = text_files,
+  callback = function()
+    -- Enable visual wrapping
+    vim.opt_local.wrap = true
+    -- Wrap at word boundaries
+    vim.opt_local.linebreak = true
+    -- Set the text width to 80 characters
+    vim.opt_local.textwidth = 80
+    -- Configure automatic text formatting
+    vim.opt_local.formatoptions:append("t")
+  end,
+})

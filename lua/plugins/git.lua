@@ -6,7 +6,7 @@ return {
     cmd = "GitLink",
     opts = {
       router = {
-        -- Usage :GitLink commit [rev=... file=./]
+        -- Usage :GitLink commit [rev=... file=./] This is a change
         commit = {
           ["^github%.com"] = "https://github.com/"
             .. "{_A.ORG}/"
@@ -14,7 +14,6 @@ return {
             .. "commit/"
             .. "{_A.REV}"
         },
-        -- Usage :GitLink compare [rev=ref1..ref2 file=./]
         compare = {
           ["^github%.com"] = "https://github.com/"
             .. "{_A.ORG}/"
@@ -25,6 +24,15 @@ return {
       },
     }
   },
+  -- -kajsfakjsfsakj kajsakjs
+  -- askfjasfkj
+  -- akjsfaksjf
+  -- Change
+  -- FOO
+  --   {
+  --
+  --
+  --   }
   {
     "sindrets/diffview.nvim",
     cmd = "DiffviewOpen",
@@ -45,8 +53,32 @@ return {
   {
     "julienvincent/hunk.nvim",
     cmd = { "DiffEditor" },
+    -- branch = "jv/ref-sukovkyyzvpp",
     config = function()
-      require("hunk").setup()
+      require("hunk").setup({
+        keys = {
+          global = {
+            quit = { "q" },
+            accept = { "<C-c><C-c>" },
+            focus_tree = { "<leader>n" },
+          },
+
+          tree = {
+            toggle_node = { "o"},
+            expand_node = { "l", "<Right>" },
+            collapse_node = { "h", "<Left>" },
+            open_file = { "<Cr>" },
+            toggle_file = { "s" },
+          },
+
+          diff = {
+            -- toggles both left and right diff on line.
+            -- Use `toggle_line` if you desire to select only one side.
+            toggle_line_pair = { "s" },
+            toggle_hunk = { "S" },
+          },
+        },
+      })
     end,
   },
   {
