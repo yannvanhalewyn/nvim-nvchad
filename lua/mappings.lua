@@ -1,4 +1,6 @@
 local f = require("functions")
+-- Sets up 'ZenModeToggle' command
+local zen_mode = require("tools.zen_mode")
 
 local M = {}
 
@@ -162,6 +164,7 @@ M.toggle = {
     ["<leader>tr"] = { "<cmd>set rnu!<CR>", "Toggle Relative number" },
     ["<leader>ts"] = { "<cmd>SupermavenToggle<CR>", "Toggle Relative number" },
     ["<leader>tt"] = { function() require("base46").toggle_theme() end, "Toggle Theme" },
+    ["<leader>tz"] = { zen_mode.toggle, "Toggle Zen Mode" },
   }
 }
 
