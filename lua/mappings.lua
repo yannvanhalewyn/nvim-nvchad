@@ -377,6 +377,7 @@ M.conjure = {
     ["<localleader>cr"] = { "<cmd>ConjureCljRefreshChanged<CR>", "Clojure Refresh Changed" },
     ["<localleader>cR"] = { "<cmd>ConjureCljRefreshAll<CR>", "Clojure Refresh All" },
     ["<localleader>cs"] = { clerk_show, "Clojure Clerk Show" },
+    ["<localleader>cc"] = { function() require("tools.scope_capture").list_captures() end, "Scope Capture List" },
   }
 }
 
