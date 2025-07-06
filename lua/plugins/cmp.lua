@@ -24,7 +24,7 @@ end
 return {
   {
     "hrsh7th/nvim-cmp",
-    enabled = false,
+    enabled = true,
     opts = function()
       local config = copy(require "nvchad.configs.cmp")
       -- table.insert(config.sources, { name = "supermaven" })
@@ -35,9 +35,10 @@ return {
     end,
   },
 
-  { import = "nvchad.blink.lazyspec" },
+  -- { import = "nvchad.blink.lazyspec" },
   {
     "saghen/blink.cmp",
+    enabled = false,
     opts = {
       keymap = {
         -- preset = "super-tab",

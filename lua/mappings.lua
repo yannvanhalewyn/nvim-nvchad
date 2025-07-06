@@ -24,6 +24,7 @@ M.editing = {
     ["+"] = { "<C-a>", "Edit Increment" },
     ["-"] = { "<C-x>", "Edit Decrement" },
     ["S"] = { ":%s/<C-r><C-w>/<C-r><C-w>/gI<left><left><left>", "Replace Current Word" },
+    ["\\"] = { ",", "Reverse f, t, F or T" } -- Since , is localleader
   },
 
   v = {
@@ -132,6 +133,7 @@ M.find = {
     ["<leader>fT"] = { "<CMD>Telescope themes<CR>", "Find Themes"},
     ["<leader>fw"] = { f.grep_current_word, "Find Word at Point" },
     ["<leader>fW"] = { f.grep_current_WORD, "Find WORD at Point" },
+    ["<leader>'"] = { "<CMD>Telescope resume<CR>", "Find resume"},
     -- ["<leader>d"] = { "<cmd>Explore %:h<CR>", "Find Current Directory" },
     ["<leader>d"] = { "<cmd>Oil<CR>", "Find Current Directory" },
     -- ["<leader>n"] = { f.open_netrw_filetree, "Find Filetree" },
