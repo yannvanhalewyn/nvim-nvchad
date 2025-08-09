@@ -99,5 +99,14 @@ return {
         end
       end
     end
+  },
+  {
+    "loctvl842/breadcrumb.nvim",
+    config = function()
+      require("breadcrumb").setup({})
+    end,
+    init = function()
+      require("breadcrumb").init()
+    end
   }
 }

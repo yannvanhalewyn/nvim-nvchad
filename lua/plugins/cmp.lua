@@ -25,12 +25,18 @@ return {
   {
     "hrsh7th/nvim-cmp",
     enabled = true,
+    dependencies = {},
     opts = function()
       local config = copy(require "nvchad.configs.cmp")
-      -- table.insert(config.sources, { name = "supermaven" })
-      table.insert(config.sources, { name = "obsidian" })
       config.mapping["<CR>"] = nil
-      config.mapping["<Tab>"] = tab_complete()
+      config.mapping["<Tab>"] = function ()
+        require("cmp").confirm()
+      end
+      config.sources = {
+        { name = "nvim_lsp" },
+        { name = "buffer" },
+        { name = "async_path" },
+      }
       return config
     end,
   },

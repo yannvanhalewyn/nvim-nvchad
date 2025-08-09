@@ -49,6 +49,12 @@ M.editing = {
   },
 }
 
+M.luasnip = {
+  i = {
+    ["<C-e>"] = { function() require("luasnip").expand_or_jump() end, "Expand or jump snippet" }
+  }
+}
+
 M.align = {
   plugin = true,
   x = {
@@ -283,7 +289,8 @@ M.neotree = {
   n = {
     { "<leader>n", ":Neotree reveal<cr>", mode = "n", desc = "Toggle Neotree"},
     { "<leader>gn", ":Neotree git_status<cr>", mode = "n", desc = "Toggle Neotree Document Symbols"},
-    { "<leader>N", ":Neotree document_symbols right<cr>", mode = "n", desc = "Toggle Neotree Document Symbols"}
+    { "<leader>N", ":Neotree document_symbols right<cr>", mode = "n", desc = "Toggle Neotree Document Symbols"},
+    { "<leader>B", ":Neotree buffers left<cr>", mode = "n", desc = "Toggle Neotree Document Symbols"}
   }
 }
 
